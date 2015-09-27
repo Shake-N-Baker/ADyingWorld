@@ -1,0 +1,1375 @@
+fileFormatVersion: 2
+guid: 9cd1c7029d29f1844add234606b6491c
+timeCreated: 1442534496
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: charTorso_0
+    21300002: charTorso_1
+    21300004: charTorso_2
+    21300006: charTorso_3
+    21300008: charTorso_4
+    21300010: charTorso_5
+    21300012: charTorso_6
+    21300014: charTorso_7
+    21300016: charTorso_8
+    21300018: charTorso_9
+    21300020: charTorso_10
+    21300022: charTorso_11
+    21300024: charTorso_12
+    21300026: charTorso_13
+    21300028: charTorso_14
+    21300030: charTorso_15
+    21300032: charTorso_16
+    21300034: charTorso_17
+    21300036: charTorso_18
+    21300038: charTorso_19
+    21300040: charTorso_20
+    21300042: charTorso_21
+    21300044: charTorso_22
+    21300046: charTorso_23
+    21300048: charTorso_24
+    21300050: charTorso_25
+    21300052: charTorso_26
+    21300054: charTorso_27
+    21300056: charTorso_28
+    21300058: charTorso_29
+    21300060: charTorso_30
+    21300062: charTorso_31
+    21300064: charTorso_32
+    21300066: charTorso_33
+    21300068: charTorso_34
+    21300070: charTorso_35
+    21300072: charTorso_36
+    21300074: charTorso_37
+    21300076: charTorso_38
+    21300078: charTorso_39
+    21300080: charTorso_40
+    21300082: charTorso_41
+    21300084: charTorso_42
+    21300086: charTorso_43
+    21300088: charTorso_44
+    21300090: charTorso_45
+    21300092: charTorso_46
+    21300094: charTorso_47
+    21300096: charTorso_48
+    21300098: charTorso_49
+    21300100: charTorso_50
+    21300102: charTorso_51
+    21300104: charTorso_52
+    21300106: charTorso_53
+    21300108: charTorso_54
+    21300110: charTorso_55
+    21300112: charTorso_56
+    21300114: charTorso_57
+    21300116: charTorso_58
+    21300118: charTorso_59
+    21300120: charTorso_60
+    21300122: charTorso_61
+    21300124: charTorso_62
+    21300126: charTorso_63
+    21300128: charTorso_64
+    21300130: charTorso_65
+    21300132: charTorso_66
+    21300134: charTorso_67
+    21300136: charTorso_68
+    21300138: charTorso_69
+    21300140: charTorso_70
+    21300142: charTorso_71
+    21300144: charTorso_72
+    21300146: charTorso_73
+    21300148: charTorso_74
+    21300150: charTorso_75
+    21300152: charTorso_76
+    21300154: charTorso_77
+    21300156: charTorso_78
+    21300158: charTorso_79
+    21300160: charTorso_80
+    21300162: charTorso_81
+    21300164: charTorso_82
+    21300166: charTorso_83
+    21300168: charTorso_84
+    21300170: charTorso_85
+    21300172: charTorso_86
+    21300174: charTorso_87
+    21300176: charTorso_88
+    21300178: charTorso_89
+    21300180: charTorso_90
+    21300182: charTorso_91
+    21300184: charTorso_92
+    21300186: charTorso_93
+    21300188: charTorso_94
+    21300190: charTorso_95
+    21300192: charTorso_96
+    21300194: charTorso_97
+    21300196: charTorso_98
+    21300198: charTorso_99
+    21300200: charTorso_100
+    21300202: charTorso_101
+    21300204: charTorso_102
+    21300206: charTorso_103
+    21300208: charTorso_104
+    21300210: charTorso_105
+    21300212: charTorso_106
+    21300214: charTorso_107
+    21300216: charTorso_108
+    21300218: charTorso_109
+    21300220: charTorso_110
+    21300222: charTorso_111
+    21300224: charTorso_112
+    21300226: charTorso_113
+    21300228: charTorso_114
+    21300230: charTorso_115
+    21300232: charTorso_116
+    21300234: charTorso_117
+    21300236: charTorso_118
+    21300238: charTorso_119
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: charTorso_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_2
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_3
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_4
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_6
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_7
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_8
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_9
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_10
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_11
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_13
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_14
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_15
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_16
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_17
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_18
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_19
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_20
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_21
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_22
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_23
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_24
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_25
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_26
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_27
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_28
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_29
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_30
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_31
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_32
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_33
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_34
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_35
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_36
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_37
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_38
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_39
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_40
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_41
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_42
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_43
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_44
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_45
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_46
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_47
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_48
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_49
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_50
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_51
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_52
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_53
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_54
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_55
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_56
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_57
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_58
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_59
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_60
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_61
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_62
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_63
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_64
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_65
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_66
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_67
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_68
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_69
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_70
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_71
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_72
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_73
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_74
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_75
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_76
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_77
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_78
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_79
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_80
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_81
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_82
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_83
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_84
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_85
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_86
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_87
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_88
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_89
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_90
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_91
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_92
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_93
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_94
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_95
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_96
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_97
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_98
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_99
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_100
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_101
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_102
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_103
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_104
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_105
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_106
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_107
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_108
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_109
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_110
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_111
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_112
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_113
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_114
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_115
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_116
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_117
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_118
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: charTorso_119
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
