@@ -6,6 +6,12 @@ using System.Collections;
 /// </summary>
 public class Game : MonoBehaviour
 {
+	// Constants
+	public const int VIEW_TILES_WIDE = 20;
+	public const int VIEW_TILES_HIGH = 18;
+	public const int CENTER_TILE_X = 10;
+	public const int CENTER_TILE_Y = 8;
+
 	// Sprite sheets
 	public Sprite[] tileGround;
 	public Sprite[] tileOverGround;
@@ -19,8 +25,12 @@ public class Game : MonoBehaviour
 	public Sprite[] charWeapon;
 
 	public World world;
+	public string[] layers;
 	public GameObject board;
-	public GameObject character;
+	public GameObject[,,] tiles;
+	public GameObject hero;
+	public int heroX;
+	public int heroY;
 
 	/// <summary>
 	/// Awake this instance, resources are loaded at this point.
@@ -46,73 +56,101 @@ public class Game : MonoBehaviour
 	{
 		world = new World();
 
-		character = new GameObject();
-		character.name = "Character";
+		hero = new GameObject();
+		heroX = world.spawnX;
+		heroY = world.spawnY;
+		hero.name = "Hero";
 		GameObject charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charWeapon[Random.Range(0, charWeapon.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharWeapon";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 		charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charShield[Random.Range(0, charShield.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharShield";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 		charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charHead[Random.Range(0, charHead.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharHead";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 		charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charTorso[Random.Range(0, charTorso.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharTorso";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 		charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charLegs[Random.Range(0, charLegs.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharLegs";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 		charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charHair[Random.Range(0, charHair.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharHair";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 		charComponent = new GameObject();
 		charComponent.AddComponent<SpriteRenderer>();
 		charComponent.GetComponent<SpriteRenderer>().sprite = charBase[Random.Range(0, charBase.Length)];
 		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
 		charComponent.transform.position = new Vector3(0, 16, 0);
 		charComponent.name = "CharBase";
-		charComponent.transform.parent = character.transform;
+		charComponent.transform.parent = hero.transform;
 
+		layers = new string[]{
+			"Ground",
+			"OverGround",
+			"Wall",
+			"DecorationBase",
+			"WallTableDecoration",
+			"Roof",
+			"DecorationOverhead"
+		};
+
+		// Setup the board
 		board = new GameObject();
 		board.name = "Board";
-		for (int x = 0; x < 20; x++)
+		tiles = new GameObject[layers.Length, VIEW_TILES_WIDE + 2, VIEW_TILES_HIGH + 2];
+
+		// Add tiles for each layer on the main screen and just off screen for transitions
+		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
 		{
-			for (int y = 0; y < 18; y++)
+			string layer = layers[layerIndex];
+			for (int x = -1; x <= VIEW_TILES_WIDE; x++)
 			{
-				GameObject tile = new GameObject();
-				tile.AddComponent<SpriteRenderer>();
-				tile.GetComponent<SpriteRenderer>().sprite = tileGround[Random.Range(0, tileGround.Length)];
-				tile.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
-				tile.transform.position = new Vector3(x * 16, (y + 1) * 16, 0);
-				tile.name = "TileX-" + x + "Y-" + y;
-				tile.transform.parent = board.transform;
+				for (int y = -1; y <= VIEW_TILES_HIGH; y++)
+				{
+					// Don't tile the corners off screen
+					if ((x == -1 || x == VIEW_TILES_WIDE) && (y == -1 || y == VIEW_TILES_HIGH))
+					{
+						continue;
+					}
+					GameObject tile = new GameObject();
+					tile.AddComponent<SpriteRenderer>();
+					tile.GetComponent<SpriteRenderer>().sortingLayerName = layer;
+					tile.transform.position = new Vector3(x * 16, (y + 1) * 16, 0);
+					tile.name = layer + "X-" + (x + 1) + "Y-" + (y + 1);
+					tile.transform.parent = board.transform;
+					tiles[layerIndex, x + 1, y + 1] = tile;
+				}
 			}
 		}
+
+		updateHeroPosition();
+		drawWorld();
 	}
 
 	/// <summary>
@@ -122,19 +160,27 @@ public class Game : MonoBehaviour
 	{
 		if (Input.GetKey(KeyCode.W))
 		{
-			character.transform.position += Vector3.up * 1f;
+			heroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
+			updateHeroPosition();
+			drawWorld();
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
-			character.transform.position += Vector3.down * 1f;
+			heroY = Mathf.Max(0, heroY - 1);
+			updateHeroPosition();
+			drawWorld();
 		}
 		if (Input.GetKey(KeyCode.A))
 		{
-			character.transform.position += Vector3.left * 1f;
+			heroX = Mathf.Max(0, heroX - 1);
+			updateHeroPosition();
+			drawWorld();
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
-			character.transform.position += Vector3.right * 1f;
+			heroX = Mathf.Min(world.tilesWide - 1, heroX + 1);
+			updateHeroPosition();
+			drawWorld();
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -152,6 +198,66 @@ public class Game : MonoBehaviour
 			component.GetComponent<SpriteRenderer>().sprite = (Random.Range(0, 2) == 1 ? charShield[Random.Range(0, charShield.Length)] : null);
 			component = GameObject.Find("CharWeapon");
 			component.GetComponent<SpriteRenderer>().sprite = (Random.Range(0, 2) == 1 ? charWeapon[Random.Range(0, charWeapon.Length)] : null);
+		}
+	}
+
+	/// <summary>
+	/// Updates the hero position.
+	/// </summary>
+	void updateHeroPosition()
+	{
+		int x = CENTER_TILE_X;
+		int y = CENTER_TILE_Y;
+		if (heroX < CENTER_TILE_X)
+		{
+			x = heroX;
+		}
+		else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+		{
+			x = CENTER_TILE_X + (heroX - ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X));
+		}
+		if (heroY < CENTER_TILE_Y)
+		{
+			y = heroY;
+		}
+		else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+		{
+			y = CENTER_TILE_Y + (heroY - ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y));
+		}
+		hero.transform.position = new Vector3(16 * x, 16 * y, 0);
+	}
+
+	/// <summary>
+	/// Draws the world.
+	/// </summary>
+	void drawWorld()
+	{
+		int cameraOffX = Mathf.Min(Mathf.Max(heroX - CENTER_TILE_X, 0), world.tilesWide - VIEW_TILES_WIDE);
+		int cameraOffY = Mathf.Min(Mathf.Max(heroY - CENTER_TILE_Y, 0), world.tilesHigh - VIEW_TILES_HIGH);
+		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
+		{
+			string layer = layers[layerIndex];
+			for (int x = -1; x <= VIEW_TILES_WIDE; x++)
+			{
+				for (int y = -1; y <= VIEW_TILES_HIGH; y++)
+				{
+					// Skip the corners off screen
+					if ((x == -1 || x == VIEW_TILES_WIDE) && (y == -1 || y == VIEW_TILES_HIGH))
+					{
+						continue;
+					}
+					int tileType = world.getTile(layer, cameraOffX + x, cameraOffY + y);
+					GameObject tile = tiles[layerIndex, x + 1, y + 1];
+					if (tileType != -1)
+					{
+						tile.GetComponent<SpriteRenderer>().sprite = tileGround[tileType];
+					}
+					else
+					{
+						tile.GetComponent<SpriteRenderer>().sprite = null;
+					}
+				}
+			}
 		}
 	}
 }
