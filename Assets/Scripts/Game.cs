@@ -208,21 +208,35 @@ public class Game : MonoBehaviour
 	{
 		int x = CENTER_TILE_X;
 		int y = CENTER_TILE_Y;
-		if (heroX < CENTER_TILE_X)
+		if (world.tilesWide >= VIEW_TILES_WIDE)
 		{
-			x = heroX;
+			if (heroX < CENTER_TILE_X)
+			{
+				x = heroX;
+			}
+			else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+			{
+				x = CENTER_TILE_X + (heroX - ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X));
+			}
 		}
-		else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+		else
 		{
-			x = CENTER_TILE_X + (heroX - ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X));
+			x = ((VIEW_TILES_WIDE - world.tilesWide) / 2) + heroX;
 		}
-		if (heroY < CENTER_TILE_Y)
+		if (world.tilesHigh >= VIEW_TILES_HIGH)
 		{
-			y = heroY;
+			if (heroY < CENTER_TILE_Y)
+			{
+				y = heroY;
+			}
+			else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+			{
+				y = CENTER_TILE_Y + (heroY - ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y));
+			}
 		}
-		else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+		else
 		{
-			y = CENTER_TILE_Y + (heroY - ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y));
+			y = ((VIEW_TILES_HIGH - world.tilesHigh) / 2) + heroY;
 		}
 		hero.transform.position = new Vector3(16 * x, 16 * y, 0);
 	}
@@ -232,8 +246,23 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void drawWorld()
 	{
-		int cameraOffX = Mathf.Min(Mathf.Max(heroX - CENTER_TILE_X, 0), world.tilesWide - VIEW_TILES_WIDE);
-		int cameraOffY = Mathf.Min(Mathf.Max(heroY - CENTER_TILE_Y, 0), world.tilesHigh - VIEW_TILES_HIGH);
+		int cameraOffX, cameraOffY;
+		if (world.tilesWide >= VIEW_TILES_WIDE)
+		{
+			cameraOffX = Mathf.Min(Mathf.Max(heroX - CENTER_TILE_X, 0), world.tilesWide - VIEW_TILES_WIDE);
+		}
+		else
+		{
+			cameraOffX = -(VIEW_TILES_WIDE - world.tilesWide) / 2;
+		}
+		if (world.tilesHigh >= VIEW_TILES_HIGH)
+		{
+			cameraOffY = Mathf.Min(Mathf.Max(heroY - CENTER_TILE_Y, 0), world.tilesHigh - VIEW_TILES_HIGH);
+		}
+		else
+		{
+			cameraOffY = -(VIEW_TILES_HIGH - world.tilesHigh) / 2;
+		}
 		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
 		{
 			string layer = layers[layerIndex];
