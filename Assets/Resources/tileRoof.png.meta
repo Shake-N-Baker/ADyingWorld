@@ -1,0 +1,979 @@
+fileFormatVersion: 2
+guid: 2f96df85bfc7acf4289ef81701166bc0
+timeCreated: 1444010445
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: tileRoof_0
+    21300002: tileRoof_1
+    21300004: tileRoof_2
+    21300006: tileRoof_3
+    21300008: tileRoof_4
+    21300010: tileRoof_5
+    21300012: tileRoof_6
+    21300014: tileRoof_7
+    21300016: tileRoof_8
+    21300018: tileRoof_9
+    21300020: tileRoof_10
+    21300022: tileRoof_11
+    21300024: tileRoof_12
+    21300026: tileRoof_13
+    21300028: tileRoof_14
+    21300030: tileRoof_15
+    21300032: tileRoof_16
+    21300034: tileRoof_17
+    21300036: tileRoof_18
+    21300038: tileRoof_19
+    21300040: tileRoof_20
+    21300042: tileRoof_21
+    21300044: tileRoof_22
+    21300046: tileRoof_23
+    21300048: tileRoof_24
+    21300050: tileRoof_25
+    21300052: tileRoof_26
+    21300054: tileRoof_27
+    21300056: tileRoof_28
+    21300058: tileRoof_29
+    21300060: tileRoof_30
+    21300062: tileRoof_31
+    21300064: tileRoof_32
+    21300066: tileRoof_33
+    21300068: tileRoof_34
+    21300070: tileRoof_35
+    21300072: tileRoof_36
+    21300074: tileRoof_37
+    21300076: tileRoof_38
+    21300078: tileRoof_39
+    21300080: tileRoof_40
+    21300082: tileRoof_41
+    21300084: tileRoof_42
+    21300086: tileRoof_43
+    21300088: tileRoof_44
+    21300090: tileRoof_45
+    21300092: tileRoof_46
+    21300094: tileRoof_47
+    21300096: tileRoof_48
+    21300098: tileRoof_49
+    21300100: tileRoof_50
+    21300102: tileRoof_51
+    21300104: tileRoof_52
+    21300106: tileRoof_53
+    21300108: tileRoof_54
+    21300110: tileRoof_55
+    21300112: tileRoof_56
+    21300114: tileRoof_57
+    21300116: tileRoof_58
+    21300118: tileRoof_59
+    21300120: tileRoof_60
+    21300122: tileRoof_61
+    21300124: tileRoof_62
+    21300126: tileRoof_63
+    21300128: tileRoof_64
+    21300130: tileRoof_65
+    21300132: tileRoof_66
+    21300134: tileRoof_67
+    21300136: tileRoof_68
+    21300138: tileRoof_69
+    21300140: tileRoof_70
+    21300142: tileRoof_71
+    21300144: tileRoof_72
+    21300146: tileRoof_73
+    21300148: tileRoof_74
+    21300150: tileRoof_75
+    21300152: tileRoof_76
+    21300154: tileRoof_77
+    21300156: tileRoof_78
+    21300158: tileRoof_79
+    21300160: tileRoof_80
+    21300162: tileRoof_81
+    21300164: tileRoof_82
+    21300166: tileRoof_83
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: tileRoof_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_2
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_3
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_4
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_6
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 210
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_7
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_8
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_9
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_10
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_11
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_12
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_13
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 191
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_15
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_16
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_17
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_18
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_19
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_20
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 172
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_21
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_22
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_23
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_24
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_25
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_26
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_27
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 153
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_28
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_29
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_30
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_31
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_32
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_33
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_34
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 134
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_35
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_36
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_37
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_38
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_39
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_40
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_41
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 115
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_42
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_43
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_44
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_45
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_46
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_47
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_48
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 96
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_49
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_50
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_51
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_52
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_53
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_54
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_55
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 77
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_56
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_57
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_58
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_59
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_60
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_61
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_62
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 58
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_63
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_64
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_65
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_66
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_67
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_68
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_69
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 39
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_70
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_71
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_72
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_73
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_74
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_75
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_76
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 20
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_77
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_78
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_79
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_80
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_81
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_82
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tileRoof_83
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 1
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

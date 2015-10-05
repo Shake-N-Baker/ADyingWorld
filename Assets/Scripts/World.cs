@@ -14,6 +14,7 @@ public class World
 	private int[] wallTableDecoration;
 	private int[] roof;
 	private int[] decorationOverhead;
+	private int[] lightLevel;
 
 	public int tilesWide;
 	public int tilesHigh;
@@ -44,6 +45,7 @@ public class World
 		wallTableDecoration = new int[tilesWide * tilesHigh];
 		roof = new int[tilesWide * tilesHigh];
 		decorationOverhead = new int[tilesWide * tilesHigh];
+		lightLevel = new int[tilesWide * tilesHigh];
 		int x = 0;
 		int y = 0;
 		Random random = new Random();
@@ -66,6 +68,7 @@ public class World
 				wallTableDecoration[convertIndex(x, y)] = -1;
 				roof[convertIndex(x, y)] = -1;
 				decorationOverhead[convertIndex(x, y)] = -1;
+				lightLevel[convertIndex(x, y)] = 0;
 				x++;
 			}
 			y++;
@@ -112,6 +115,45 @@ public class World
 				break;
 		}
 		return tile;
+	}
+
+	/// <summary>
+	/// Gets the tint of tiles based on time of day.
+	/// </summary>
+	/// <returns>The tile tint.</returns>
+	/// <param name="turn">The current turn.</param>
+	/// <param name="turnsPerDay">Turns per day.</param>
+	public float getDayTimeTint(int turn, int turnsPerDay)
+	{
+		int time = (turn + (turnsPerDay / 4)) % turnsPerDay;
+		if ((turnsPerDay / 4) <= time && time <= (3 * (turnsPerDay / 4)))
+		{
+			return 1f;
+		}
+		else if (time < (turnsPerDay / 4))
+		{
+			if (time < (turnsPerDay / 8))
+			{
+				return 0.4f;
+			}
+			else
+			{
+				time = time - (turnsPerDay / 8);
+				return 0.4f + (0.6f * (time / (turnsPerDay / 8f)));
+			}
+		}
+		else
+		{
+			if (time > (7 * (turnsPerDay / 8)))
+			{
+				return 0.4f;
+			}
+			else
+			{
+				time = time - (3 * (turnsPerDay / 4));
+				return 1.0f - (0.6f * (time / (turnsPerDay / 8f)));
+			}
+		}
 	}
 
 	/// <summary>

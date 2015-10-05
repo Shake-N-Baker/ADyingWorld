@@ -11,11 +11,15 @@ public class Game : MonoBehaviour
 	public const int VIEW_TILES_HIGH = 18;
 	public const int CENTER_TILE_X = 10;
 	public const int CENTER_TILE_Y = 8;
+	public const int TURNS_PER_DAY = 360;
 
 	// Sprite sheets
 	public Sprite[] tileGround;
 	public Sprite[] tileOverGround;
+	public Sprite[] tileWall;
 	public Sprite[] tileDecorationBase;
+	public Sprite[] tileRoof;
+	public Sprite[] tileDecorationOverhead;
 	public Sprite[] charBase;
 	public Sprite[] charHair;
 	public Sprite[] charHead;
@@ -31,6 +35,7 @@ public class Game : MonoBehaviour
 	public GameObject hero;
 	public int heroX;
 	public int heroY;
+	public int turnsTaken;
 
 	/// <summary>
 	/// Awake this instance, resources are loaded at this point.
@@ -39,7 +44,10 @@ public class Game : MonoBehaviour
 	{
 		tileGround = Resources.LoadAll<Sprite>("tileGround");
 		tileOverGround = Resources.LoadAll<Sprite>("tileOverGround");
+		tileWall = Resources.LoadAll<Sprite>("tileWall");
 		tileDecorationBase = Resources.LoadAll<Sprite>("tileDecorationBase");
+		tileRoof = Resources.LoadAll<Sprite>("tileRoof");
+		tileDecorationOverhead = Resources.LoadAll<Sprite>("tileDecorationOverhead");
 		charBase = Resources.LoadAll<Sprite>("charBase");
 		charHair = Resources.LoadAll<Sprite>("charHair");
 		charHead = Resources.LoadAll<Sprite>("charHead");
@@ -55,6 +63,7 @@ public class Game : MonoBehaviour
 	void Start()
 	{
 		world = new World();
+		turnsTaken = 0;
 
 		hero = new GameObject();
 		heroX = world.spawnX;
@@ -206,6 +215,7 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void updateHeroPosition()
 	{
+		turnsTaken++;
 		int x = CENTER_TILE_X;
 		int y = CENTER_TILE_Y;
 		if (world.tilesWide >= VIEW_TILES_WIDE)
@@ -246,6 +256,8 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void drawWorld()
 	{
+		float tint = world.getDayTimeTint(turnsTaken, TURNS_PER_DAY);
+		Color tintColor = new Color(tint, tint, tint, 1);
 		int cameraOffX, cameraOffY;
 		if (world.tilesWide >= VIEW_TILES_WIDE)
 		{
@@ -280,6 +292,7 @@ public class Game : MonoBehaviour
 					if (tileType != -1)
 					{
 						tile.GetComponent<SpriteRenderer>().sprite = tileGround[tileType];
+						tile.GetComponent<SpriteRenderer>().material.color = tintColor;
 					}
 					else
 					{
