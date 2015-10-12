@@ -185,7 +185,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileGround: []
   tileOverGround: []
+  tileWall: []
   tileDecorationBase: []
+  tileRoof: []
+  tileDecorationOverhead: []
   charBase: []
   charHair: []
   charHead: []
@@ -198,3 +201,4 @@ MonoBehaviour:
   hero: {fileID: 0}
   heroX: 0
   heroY: 0
+  turnsTaken: 0

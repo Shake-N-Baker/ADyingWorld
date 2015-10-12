@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: bdb4578676085dc44b947fdd15fc9c19
-timeCreated: 1444010431
+guid: c2bd71b8445656a4b9d0f015cfb5cedd
+timeCreated: 1444187943
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -117,10 +117,6 @@ TextureImporter:
     21300220: tileDecorationOverhead_110
     21300222: tileDecorationOverhead_111
     21300224: tileDecorationOverhead_112
-    21300226: tileDecorationOverhead_113
-    21300228: tileDecorationOverhead_114
-    21300230: tileDecorationOverhead_115
-    21300232: tileDecorationOverhead_116
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1290,46 +1286,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 153
-        y: 1
-        width: 16
-        height: 16
-      alignment: 1
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileDecorationOverhead_113
-      rect:
-        serializedVersion: 2
-        x: 172
-        y: 1
-        width: 16
-        height: 16
-      alignment: 1
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileDecorationOverhead_114
-      rect:
-        serializedVersion: 2
-        x: 191
-        y: 1
-        width: 16
-        height: 16
-      alignment: 1
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileDecorationOverhead_115
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 1
-        width: 16
-        height: 16
-      alignment: 1
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tileDecorationOverhead_116
-      rect:
-        serializedVersion: 2
-        x: 229
         y: 1
         width: 16
         height: 16

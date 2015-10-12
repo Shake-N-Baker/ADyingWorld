@@ -18,6 +18,7 @@ public class Game : MonoBehaviour
 	public Sprite[] tileOverGround;
 	public Sprite[] tileWall;
 	public Sprite[] tileDecorationBase;
+	public Sprite[] tileWallTableDecoration;
 	public Sprite[] tileRoof;
 	public Sprite[] tileDecorationOverhead;
 	public Sprite[] charBase;
@@ -46,6 +47,7 @@ public class Game : MonoBehaviour
 		tileOverGround = Resources.LoadAll<Sprite>("tileOverGround");
 		tileWall = Resources.LoadAll<Sprite>("tileWall");
 		tileDecorationBase = Resources.LoadAll<Sprite>("tileDecorationBase");
+		tileWallTableDecoration = Resources.LoadAll<Sprite>("tileWallTableDecoration");
 		tileRoof = Resources.LoadAll<Sprite>("tileRoof");
 		tileDecorationOverhead = Resources.LoadAll<Sprite>("tileDecorationOverhead");
 		charBase = Resources.LoadAll<Sprite>("charBase");
