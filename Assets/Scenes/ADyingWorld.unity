@@ -187,6 +187,7 @@ MonoBehaviour:
   tileOverGround: []
   tileWall: []
   tileDecorationBase: []
+  tileWallTableDecoration: []
   tileRoof: []
   tileDecorationOverhead: []
   charBase: []

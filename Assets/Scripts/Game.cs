@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
 	public const int CENTER_TILE_Y = 8;
 	public const int TURNS_PER_DAY = 360;
 
-	// Sprite sheets
+	// Tile Sprite Sheets
 	public Sprite[] tileGround;
 	public Sprite[] tileOverGround;
 	public Sprite[] tileWall;
@@ -21,6 +21,9 @@ public class Game : MonoBehaviour
 	public Sprite[] tileWallTableDecoration;
 	public Sprite[] tileRoof;
 	public Sprite[] tileDecorationOverhead;
+	public Sprite[][] tileLayer;
+
+	// Character Sprite Sheets
 	public Sprite[] charBase;
 	public Sprite[] charHair;
 	public Sprite[] charHead;
@@ -29,11 +32,14 @@ public class Game : MonoBehaviour
 	public Sprite[] charTorso;
 	public Sprite[] charWeapon;
 
+	// Game Objects
 	public World world;
-	public string[] layers;
 	public GameObject board;
 	public GameObject[,,] tiles;
 	public GameObject hero;
+
+	// Game Variables
+	public string[] layers;
 	public int heroX;
 	public int heroY;
 	public int turnsTaken;
@@ -50,6 +56,14 @@ public class Game : MonoBehaviour
 		tileWallTableDecoration = Resources.LoadAll<Sprite>("tileWallTableDecoration");
 		tileRoof = Resources.LoadAll<Sprite>("tileRoof");
 		tileDecorationOverhead = Resources.LoadAll<Sprite>("tileDecorationOverhead");
+		tileLayer = new Sprite[7][];
+		tileLayer[0] = tileGround;
+		tileLayer[1] = tileOverGround;
+		tileLayer[2] = tileWall;
+		tileLayer[3] = tileDecorationBase;
+		tileLayer[4] = tileWallTableDecoration;
+		tileLayer[5] = tileRoof;
+		tileLayer[6] = tileDecorationOverhead;
 		charBase = Resources.LoadAll<Sprite>("charBase");
 		charHair = Resources.LoadAll<Sprite>("charHair");
 		charHead = Resources.LoadAll<Sprite>("charHead");
@@ -171,27 +185,43 @@ public class Game : MonoBehaviour
 	{
 		if (Input.GetKey(KeyCode.W))
 		{
-			heroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
-			updateHeroPosition();
-			drawWorld();
+			int newHeroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
+			if (!world.pathBlocked(heroX, newHeroY))
+			{
+				heroY = newHeroY;
+				updateHeroPosition();
+				drawWorld();
+			}
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
-			heroY = Mathf.Max(0, heroY - 1);
-			updateHeroPosition();
-			drawWorld();
+			int newHeroY = Mathf.Max(0, heroY - 1);
+			if (!world.pathBlocked(heroX, newHeroY))
+			{
+				heroY = newHeroY;
+				updateHeroPosition();
+				drawWorld();
+			}
 		}
 		if (Input.GetKey(KeyCode.A))
 		{
-			heroX = Mathf.Max(0, heroX - 1);
-			updateHeroPosition();
-			drawWorld();
+			int newHeroX = Mathf.Max(0, heroX - 1);
+			if (!world.pathBlocked(newHeroX, heroY))
+			{
+				heroX = newHeroX;
+				updateHeroPosition();
+				drawWorld();
+			}
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
-			heroX = Mathf.Min(world.tilesWide - 1, heroX + 1);
-			updateHeroPosition();
-			drawWorld();
+			int newHeroX = Mathf.Min(world.tilesWide - 1, heroX + 1);
+			if (!world.pathBlocked(newHeroX, heroY))
+			{
+				heroX = newHeroX;
+				updateHeroPosition();
+				drawWorld();
+			}
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -293,8 +323,16 @@ public class Game : MonoBehaviour
 					GameObject tile = tiles[layerIndex, x + 1, y + 1];
 					if (tileType != -1)
 					{
-						tile.GetComponent<SpriteRenderer>().sprite = tileGround[tileType];
-						tile.GetComponent<SpriteRenderer>().material.color = tintColor;
+						int lightLevel = world.getLightLevel(cameraOffX + x, cameraOffY + y);
+						tile.GetComponent<SpriteRenderer>().sprite = tileLayer[layerIndex][tileType];
+						if (lightLevel > 0 && world.getLightTint(lightLevel) > tint)
+						{
+							tile.GetComponent<SpriteRenderer>().material.color = world.getLightTintColor(lightLevel);
+						}
+						else
+						{
+							tile.GetComponent<SpriteRenderer>().material.color = tintColor;
+						}
 					}
 					else
 					{

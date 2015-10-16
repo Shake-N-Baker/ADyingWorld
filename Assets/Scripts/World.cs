@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 
 /// <summary>
@@ -14,6 +15,7 @@ public class World
 	private int[] wallTableDecoration;
 	private int[] roof;
 	private int[] decorationOverhead;
+	private bool[] pathingBlocked;
 	private int[] lightLevel;
 
 	public int tilesWide;
@@ -45,34 +47,32 @@ public class World
 		wallTableDecoration = new int[tilesWide * tilesHigh];
 		roof = new int[tilesWide * tilesHigh];
 		decorationOverhead = new int[tilesWide * tilesHigh];
+		pathingBlocked = new bool[tilesWide * tilesHigh];
 		lightLevel = new int[tilesWide * tilesHigh];
 		int x = 0;
 		int y = 0;
-		Random random = new Random();
 		while (y < tilesHigh)
 		{
 			x = 0;
 			while (x < tilesWide)
 			{
-				if (random.Next(0, 2) > 0)
-				{
-					ground[convertIndex(x, y)] = 80;
-				}
-				else
-				{
-					ground[convertIndex(x, y)] = 82;
-				}
+				ground[convertIndex(x, y)] = 80;
 				overGround[convertIndex(x, y)] = -1;
 				wall[convertIndex(x, y)] = -1;
 				decorationBase[convertIndex(x, y)] = -1;
 				wallTableDecoration[convertIndex(x, y)] = -1;
 				roof[convertIndex(x, y)] = -1;
 				decorationOverhead[convertIndex(x, y)] = -1;
+				pathingBlocked[convertIndex(x, y)] = false;
 				lightLevel[convertIndex(x, y)] = 0;
 				x++;
 			}
 			y++;
 		}
+		wall[convertIndex(5, 5)] = 30;
+		wallTableDecoration[convertIndex(5, 5)] = 529;
+		pathingBlocked[convertIndex(5, 5)] = true;
+		placeLight(5, 5, 13);
 	}
 
 	/// <summary>
@@ -81,8 +81,8 @@ public class World
 	/// </summary>
 	/// <returns>The tile type.</returns>
 	/// <param name="layer">The sorting layer.</param>
-	/// <param name="x">The x coordinate.</param>
-	/// <param name="y">The y coordinate.</param>
+	/// <param name="x">The tile x position.</param>
+	/// <param name="y">The tile y position.</param>
 	public int getTile(String layer, int x, int y)
 	{
 		int tile = -1;
@@ -152,6 +152,92 @@ public class World
 			{
 				time = time - (3 * (turnsPerDay / 4));
 				return 1.0f - (0.6f * (time / (turnsPerDay / 8f)));
+			}
+		}
+	}
+
+	/// <summary>
+	/// Returns whether the path is blocked at the specified coordinates.
+	/// </summary>
+	/// <returns><c>true</c>, if path is blocked <c>false</c> otherwise.</returns>
+	/// <param name="x">The tile x position.</param>
+	/// <param name="y">The tile y position.</param>
+	public bool pathBlocked(int x, int y)
+	{
+		return pathingBlocked[convertIndex(x, y)];
+	}
+
+	/// <summary>
+	/// Returns the light level at the specified coordinates.
+	/// </summary>
+	/// <returns>The light level.</returns>
+	/// <param name="x">The tile x position.</param>
+	/// <param name="y">The tile y position.</param>
+	public int getLightLevel(int x, int y)
+	{
+		return lightLevel[convertIndex(x, y)];
+	}
+
+	/// <summary>
+	/// Gets the tint of the light of specified brightness.
+	/// </summary>
+	/// <returns>The tint of the tile.</returns>
+	/// <param name="brightness">The brightness level of the light.</param>
+	public float getLightTint(int brightness)
+	{
+		if (brightness < 1)
+		{
+			return 0;
+		}
+		else if (brightness > 9)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0.4f + (0.06f * brightness);
+		}
+	}
+
+	/// <summary>
+	/// Gets the tint color of the light of specified brightness.
+	/// </summary>
+	/// <returns>The tint color of the tile.</returns>
+	/// <param name="brightness">The brightness level of the light.</param>
+	public Color getLightTintColor(int brightness)
+	{
+		return new Color(getLightTint(brightness), getLightTint(brightness), getLightTint(brightness), 1);
+	}
+
+	/// <summary>
+	/// Places a light at the designated coordinates and spreads it.
+	/// </summary>
+	/// <param name="x">The tile x position.</param>
+	/// <param name="y">The tile y position.</param>
+	/// <param name="brightness">The brightness of the light.</param>
+	private void placeLight(int x, int y, int brightness)
+	{
+		if (lightLevel[convertIndex(x, y)] < brightness)
+		{
+			lightLevel[convertIndex(x, y)] = brightness;
+			if (brightness > 1)
+			{
+				if ((x - 1) >= 0)
+				{
+					placeLight(x - 1, y, brightness - 1);
+				}
+				if ((x + 1) < tilesWide)
+				{
+					placeLight(x + 1, y, brightness - 1);
+				}
+				if ((y - 1) >= 0)
+				{
+					placeLight(x, y - 1, brightness - 1);
+				}
+				if ((y + 1) < tilesHigh)
+				{
+					placeLight(x, y + 1, brightness - 1);
+				}
 			}
 		}
 	}
