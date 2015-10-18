@@ -44,6 +44,10 @@ public class Game : MonoBehaviour
 	public int heroY;
 	public int turnsTaken;
 
+	// Debug Variables
+	public bool debugOn = false;
+	public Color debugPathBlockColor = new Color(1, 0.6f, 0.6f, 1);
+
 	/// <summary>
 	/// Awake this instance, resources are loaded at this point.
 	/// </summary>
@@ -183,6 +187,12 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			debugOn = !debugOn;
+			drawWorld();
+		}
+
 		if (Input.GetKey(KeyCode.W))
 		{
 			int newHeroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
@@ -325,13 +335,22 @@ public class Game : MonoBehaviour
 					{
 						int lightLevel = world.getLightLevel(cameraOffX + x, cameraOffY + y);
 						tile.GetComponent<SpriteRenderer>().sprite = tileLayer[layerIndex][tileType];
-						if (lightLevel > 0 && world.getLightTint(lightLevel) > tint)
+
+						bool pathBlock = world.pathBlocked(cameraOffX + x, cameraOffY + y);
+						if (pathBlock && debugOn)
 						{
-							tile.GetComponent<SpriteRenderer>().material.color = world.getLightTintColor(lightLevel);
+							tile.GetComponent<SpriteRenderer>().material.color = debugPathBlockColor;
 						}
 						else
 						{
-							tile.GetComponent<SpriteRenderer>().material.color = tintColor;
+							if (lightLevel > 0 && world.getLightTint(lightLevel) > tint)
+							{
+								tile.GetComponent<SpriteRenderer>().material.color = world.getLightTintColor(lightLevel);
+							}
+							else
+							{
+								tile.GetComponent<SpriteRenderer>().material.color = tintColor;
+							}
 						}
 					}
 					else

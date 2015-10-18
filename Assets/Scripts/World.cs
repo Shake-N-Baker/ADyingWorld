@@ -6,20 +6,17 @@ using System;
 /// </summary>
 public class World
 {
+	// Constants
 	public const int MAP_TILES_WIDE = 256;
 	public const int MAP_TILES_HIGH = 256;
-	private int[] ground;
-	private int[] overGround;
-	private int[] wall;
-	private int[] decorationBase;
-	private int[] wallTableDecoration;
-	private int[] roof;
-	private int[] decorationOverhead;
-	private bool[] pathingBlocked;
-	private int[] lightLevel;
+	public const int ZONE_TILES_WIDE = 32;
+	public const int ZONE_TILES_HIGH = 32;
 
+	// Instance variables
 	public int tilesWide;
 	public int tilesHigh;
+	public Tile[] tiles;
+	public Zone[] zones;
 	public int spawnX;
 	public int spawnY;
 
@@ -36,43 +33,39 @@ public class World
 	/// </summary>
 	public void createWorld()
 	{
-		spawnX = 0;
-		spawnY = 0;
 		tilesWide = MAP_TILES_WIDE;
 		tilesHigh = MAP_TILES_HIGH;
-		ground = new int[tilesWide * tilesHigh];
-		overGround = new int[tilesWide * tilesHigh];
-		wall = new int[tilesWide * tilesHigh];
-		decorationBase = new int[tilesWide * tilesHigh];
-		wallTableDecoration = new int[tilesWide * tilesHigh];
-		roof = new int[tilesWide * tilesHigh];
-		decorationOverhead = new int[tilesWide * tilesHigh];
-		pathingBlocked = new bool[tilesWide * tilesHigh];
-		lightLevel = new int[tilesWide * tilesHigh];
-		int x = 0;
-		int y = 0;
-		while (y < tilesHigh)
+		tiles = new Tile[tilesWide * tilesHigh];
+		for (int y = 0; y < tilesHigh; y++)
 		{
-			x = 0;
-			while (x < tilesWide)
+			for (int x = 0; x < tilesWide; x++)
 			{
-				ground[convertIndex(x, y)] = 80;
-				overGround[convertIndex(x, y)] = -1;
-				wall[convertIndex(x, y)] = -1;
-				decorationBase[convertIndex(x, y)] = -1;
-				wallTableDecoration[convertIndex(x, y)] = -1;
-				roof[convertIndex(x, y)] = -1;
-				decorationOverhead[convertIndex(x, y)] = -1;
-				pathingBlocked[convertIndex(x, y)] = false;
-				lightLevel[convertIndex(x, y)] = 0;
-				x++;
+				tiles[convertIndex(x, y)] = new Tile(80);
 			}
-			y++;
 		}
-		wall[convertIndex(5, 5)] = 30;
-		wallTableDecoration[convertIndex(5, 5)] = 529;
-		pathingBlocked[convertIndex(5, 5)] = true;
-		placeLight(5, 5, 13);
+
+		int zonesWide = MAP_TILES_WIDE / ZONE_TILES_WIDE;
+		int zonesHigh = MAP_TILES_HIGH / ZONE_TILES_HIGH;
+		zones = new Zone[zonesWide * zonesHigh];
+		System.Random rand = new System.Random();
+		int townZoneX = rand.Next(0, zonesWide / 2) + (zonesWide / 4);
+		int townZoneY = rand.Next(0, zonesHigh / 2) + (zonesHigh / 4);
+		spawnX = (townZoneX * ZONE_TILES_WIDE) + (ZONE_TILES_WIDE / 2);
+		spawnY = (townZoneY * ZONE_TILES_HIGH) + (ZONE_TILES_HIGH / 2);
+		for (int y = 0; y < zonesHigh; y++)
+		{
+			for (int x = 0; x < zonesWide; x++)
+			{
+				if (x == townZoneX && y == townZoneY)
+				{
+					zones[(y * zonesWide) + x] = new Zone(Zone.TOWN, this, x * ZONE_TILES_WIDE, y * ZONE_TILES_HIGH, ZONE_TILES_WIDE, ZONE_TILES_HIGH);
+				}
+				else
+				{
+					zones[(y * zonesWide) + x] = new Zone(Zone.FOREST, this, x * ZONE_TILES_WIDE, y * ZONE_TILES_HIGH, ZONE_TILES_WIDE, ZONE_TILES_HIGH);
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -93,25 +86,25 @@ public class World
 		switch (layer)
 		{
 			case "Ground":
-				tile = ground[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].ground;
 				break;
 			case "OverGround":
-				tile = overGround[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].overGround;
 				break;
 			case "Wall":
-				tile = wall[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].wall;
 				break;
 			case "DecorationBase":
-				tile = decorationBase[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].decorationBase;
 				break;
 			case "WallTableDecoration":
-				tile = wallTableDecoration[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].wallTableDecoration;
 				break;
 			case "Roof":
-				tile = roof[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].roof;
 				break;
 			case "DecorationOverhead":
-				tile = decorationOverhead[convertIndex(x, y)];
+				tile = tiles[convertIndex(x, y)].decorationOverhead;
 				break;
 		}
 		return tile;
@@ -164,7 +157,7 @@ public class World
 	/// <param name="y">The tile y position.</param>
 	public bool pathBlocked(int x, int y)
 	{
-		return pathingBlocked[convertIndex(x, y)];
+		return tiles[convertIndex(x, y)].pathingBlocked;
 	}
 
 	/// <summary>
@@ -175,7 +168,7 @@ public class World
 	/// <param name="y">The tile y position.</param>
 	public int getLightLevel(int x, int y)
 	{
-		return lightLevel[convertIndex(x, y)];
+		return tiles[convertIndex(x, y)].lightLevel;
 	}
 
 	/// <summary>
@@ -215,11 +208,11 @@ public class World
 	/// <param name="x">The tile x position.</param>
 	/// <param name="y">The tile y position.</param>
 	/// <param name="brightness">The brightness of the light.</param>
-	private void placeLight(int x, int y, int brightness)
+	public void placeLight(int x, int y, int brightness)
 	{
-		if (lightLevel[convertIndex(x, y)] < brightness)
+		if (tiles[convertIndex(x, y)].lightLevel < brightness)
 		{
-			lightLevel[convertIndex(x, y)] = brightness;
+			tiles[convertIndex(x, y)].lightLevel = brightness;
 			if (brightness > 1)
 			{
 				if ((x - 1) >= 0)
