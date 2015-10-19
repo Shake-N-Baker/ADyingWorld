@@ -197,9 +197,11 @@ MonoBehaviour:
   charShield: []
   charTorso: []
   charWeapon: []
-  layers: []
   board: {fileID: 0}
   hero: {fileID: 0}
+  layers: []
   heroX: 0
   heroY: 0
   turnsTaken: 0
+  debugOn: 0
+  debugPathBlockColor: {r: 1, g: .600000024, b: .600000024, a: 1}
