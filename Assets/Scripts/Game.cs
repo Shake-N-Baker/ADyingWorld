@@ -192,6 +192,14 @@ public class Game : MonoBehaviour
 			debugOn = !debugOn;
 			drawWorld();
 		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			world = new World();
+			turnsTaken = 0;
+			heroX = world.spawnX;
+			heroY = world.spawnY;
+			drawWorld();
+		}
 
 		if (Input.GetKey(KeyCode.W))
 		{

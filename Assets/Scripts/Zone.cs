@@ -91,9 +91,10 @@ public class Zone
 		{
 			for (int x = 0; x < this.tilesWide; x++)
 			{
-				zoneTiles[convertIndex(x, y)].ground = 117;
+				zoneTiles[convertIndex(x, y)].ground = 80;
 			}
 		}
+		int topLeftX = -1, topLeftY = -1, topRightX = -1, topRightY = -1, botLeftX = -1, botLeftY = -1, botRightX = -1, botRightY = -1;
 		// Pick a corner to build offset from
 		int buildingWidth = 9;
 		int buildingHeight = 7;
@@ -105,21 +106,29 @@ public class Zone
 		corners[r] = corners[corners.Length - 1];
 		if (corner == "TL")
 		{
-			cornerOffY = tilesHigh - cornerOffY;
+			cornerOffY = (tilesHigh - 1) - cornerOffY;
+			topLeftX = cornerOffX + 4;
+			topLeftY = cornerOffY - 7;
 		}
 		else if (corner == "TR")
 		{
-			cornerOffX = tilesWide - buildingWidth - cornerOffX;
-			cornerOffY = tilesHigh - cornerOffY;
+			cornerOffX = (tilesWide - 1) - buildingWidth - cornerOffX;
+			cornerOffY = (tilesHigh - 1) - cornerOffY;
+			topRightX = cornerOffX + 4;
+			topRightY = cornerOffY - 7;
 		}
 		else if (corner == "BL")
 		{
 			cornerOffY = cornerOffY + buildingHeight;
+			botLeftX = cornerOffX + 4;
+			botLeftY = cornerOffY - 7;
 		}
 		else if (corner == "BR")
 		{
-			cornerOffX = tilesWide - buildingWidth - cornerOffX;
+			cornerOffX = (tilesWide - 1) - buildingWidth - cornerOffX;
 			cornerOffY = cornerOffY + buildingHeight;
+			botRightX = cornerOffX + 4;
+			botRightY = cornerOffY - 7;
 		}
 		// Build Inn
 		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY)].Update(decorationOverhead: 105);
@@ -174,7 +183,7 @@ public class Zone
 		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY - 6)].Update(wall: 24, wallTableDecoration: 529, decorationOverhead: 60, pathingBlocked: 1);
 		world.placeLight(offsetX + cornerOffX + 6, offsetY + cornerOffY - 6, 13);
 		// Pick a remaining corner to build offset from
-		buildingWidth = 6;
+		buildingWidth = 7;
 		buildingHeight = 6;
 		cornerOffX = rand.Next(1, 5 + 1);
 		cornerOffY = rand.Next(1, 5 + 1);
@@ -184,53 +193,71 @@ public class Zone
 		if (corner == "TL")
 		{
 			cornerOffY = tilesHigh - cornerOffY;
+			topLeftX = cornerOffX + 1;
+			topLeftY = cornerOffY - 6;
 		}
 		else if (corner == "TR")
 		{
 			cornerOffX = tilesWide - buildingWidth - cornerOffX;
 			cornerOffY = tilesHigh - cornerOffY;
+			topRightX = cornerOffX + 1;
+			topRightY = cornerOffY - 6;
 		}
 		else if (corner == "BL")
 		{
 			cornerOffY = cornerOffY + buildingHeight;
+			botLeftX = cornerOffX + 1;
+			botLeftY = cornerOffY - 6;
 		}
 		else if (corner == "BR")
 		{
 			cornerOffX = tilesWide - buildingWidth - cornerOffX;
 			cornerOffY = cornerOffY + buildingHeight;
+			botRightX = cornerOffX + 1;
+			botRightY = cornerOffY - 6;
 		}
 		// Build Blacksmith
 		zoneTiles[convertIndex(cornerOffX, cornerOffY)].Update(decorationOverhead: 25, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY)].Update(roof: 22, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY)].Update(decorationOverhead: 26, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY)].Update(roof: 21, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY)].Update(roof: 22, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY)].Update(roof: 23, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX, cornerOffY - 1)].Update(roof: 24, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 1)].Update(roof: 29, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 1)].Update(roof: 25, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX, cornerOffY - 2)].Update(wall: 26, roof: 31, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 2)].Update(wall: 26, roof: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 2)].Update(wall: 26, roof: 32, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 2)].Update(roof: 22, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 2)].Update(roof: 22, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 2)].Update(roof: 23, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX, cornerOffY - 3)].Update(wall: 25, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 3)].Update(wall: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 3)].Update(wall: 27, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 3)].Update(roof: 36, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 3)].Update(roof: 36, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 3)].Update(roof: 37, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX, cornerOffY - 4)].Update(wall: 25, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 4)].Update(wall: 26, wallTableDecoration: 291, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 4)].Update(wall: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 4)].Update(wall: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 4)].Update(wall: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 4)].Update(wall: 27, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX, cornerOffY - 5)].Update(wall: 22, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 5)].Update(wall: 21, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 5)].Update(wall: 21, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 5)].Update(wall: 21, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 5)].Update(wall: 21, wallTableDecoration: 233, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 5)].Update(wall: 24, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 1)].Update(roof: 25, decorationOverhead: 100, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 1)].Update(wall: 79, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 1)].Update(roof: 35, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 1)].Update(roof: 36, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY - 1)].Update(roof: 37, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX, cornerOffY - 2)].Update(wall: 72, roof: 31, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 2)].Update(wall: 72, wallTableDecoration: 576, roof: 26, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 2)].Update(wall: 72, roof: 32, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 2)].Update(wall: 72, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 2)].Update(wall: 78, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 2)].Update(wall: 79, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY - 2)].Update(wall: 80, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX, cornerOffY - 3)].Update(wall: 78, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 3)].Update(wall: 79, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 3)].Update(wall: 80, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 3)].Update(wall: 67, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 3)].Update(wall: 71, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 3)].Update(wall: 72, wallTableDecoration: 359, pathingBlocked: 1);
+		world.placeLight(offsetX + cornerOffX + 5, offsetY + cornerOffY - 3, 15);
+		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY - 3)].Update(wall: 73, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX, cornerOffY - 4)].Update(wall: 68, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 4)].Update(wall: 67, wallTableDecoration: 233, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 4)].Update(wall: 70, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 4)].Update(decorationBase: 119, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 4)].Update(wall: 68, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 4)].Update(wall: 67, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY - 4)].Update(wall: 70, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 5)].Update(overGround: 154);
+		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 5)].Update(decorationBase: 120, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 6, cornerOffY - 5)].Update(decorationBase: 196, pathingBlocked: 1);
 		// Pick a remaining corner to build offset from
+		buildingWidth = 6;
+		buildingHeight = 7;
 		cornerOffX = rand.Next(1, 5 + 1);
 		cornerOffY = rand.Next(1, 5 + 1);
 		r = rand.Next(0, corners.Length - 2);
@@ -239,22 +266,30 @@ public class Zone
 		if (corner == "TL")
 		{
 			cornerOffY = tilesHigh - cornerOffY;
+			topLeftX = cornerOffX + 4;
+			topLeftY = cornerOffY - 7;
 		}
 		else if (corner == "TR")
 		{
 			cornerOffX = tilesWide - buildingWidth - cornerOffX;
 			cornerOffY = tilesHigh - cornerOffY;
+			topRightX = cornerOffX + 4;
+			topRightY = cornerOffY - 7;
 		}
 		else if (corner == "BL")
 		{
 			cornerOffY = cornerOffY + buildingHeight;
+			botLeftX = cornerOffX + 4;
+			botLeftY = cornerOffY - 7;
 		}
 		else if (corner == "BR")
 		{
 			cornerOffX = tilesWide - buildingWidth - cornerOffX;
 			cornerOffY = cornerOffY + buildingHeight;
+			botRightX = cornerOffX + 4;
+			botRightY = cornerOffY - 7;
 		}
-		// Build Herbalist
+		// Build Apothecary/Herbalist
 		zoneTiles[convertIndex(cornerOffX, cornerOffY)].Update(decorationOverhead: 25, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY)].Update(roof: 22, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY)].Update(decorationOverhead: 26, pathingBlocked: 1);
@@ -268,7 +303,8 @@ public class Zone
 		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 2)].Update(roof: 22, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 2)].Update(roof: 23, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX, cornerOffY - 3)].Update(wall: 25, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 3)].Update(wall: 26, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 3)].Update(wall: 26, wallTableDecoration: 529, pathingBlocked: 1);
+		world.placeLight(offsetX + cornerOffX + 1, offsetY + cornerOffY - 3, 13);
 		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 3)].Update(wall: 27, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 3)].Update(roof: 36, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 3)].Update(roof: 36, pathingBlocked: 1);
@@ -276,15 +312,114 @@ public class Zone
 		zoneTiles[convertIndex(cornerOffX, cornerOffY - 4)].Update(wall: 25, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 4)].Update(wall: 26, wallTableDecoration: 291, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 4)].Update(wall: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 4)].Update(wall: 26, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 4)].Update(wall: 26, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 4)].Update(wall: 26, wallTableDecoration: 0, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 4)].Update(wall: 26, wallTableDecoration: 3, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 4)].Update(wall: 27, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX, cornerOffY - 5)].Update(wall: 22, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 5)].Update(wall: 21, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 5)].Update(wall: 21, pathingBlocked: 1);
-		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 5)].Update(wall: 21, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 5)].Update(wall: 21, wallTableDecoration: 1, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 5)].Update(wall: 21, wallTableDecoration: 233, pathingBlocked: 1);
 		zoneTiles[convertIndex(cornerOffX + 5, cornerOffY - 5)].Update(wall: 24, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 1, cornerOffY - 6)].Update(decorationBase: 110, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 2, cornerOffY - 6)].Update(decorationBase: 26, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 3, cornerOffY - 6)].Update(decorationBase: 9, pathingBlocked: 1);
+		zoneTiles[convertIndex(cornerOffX + 4, cornerOffY - 6)].Update(overGround: 154);
+		// Place roads
+		int centerX, topMinY, botMinY;
+		if (topLeftY != -1 && topRightY != -1)
+		{
+			topMinY = Math.Min(topLeftY, topRightY);
+		}
+		else
+		{
+			topMinY = Math.Max(topLeftY, topRightY);
+		}
+		if (botLeftY != -1 && botRightY != -1)
+		{
+			botMinY = Math.Min(botLeftY, botRightY);
+		}
+		else
+		{
+			botMinY = Math.Max(botLeftY, botRightY);
+		}
+		centerX = World.ZONE_TILES_WIDE / 2;
+		if (topLeftX != -1)
+		{
+			for (int roadY = topLeftY; roadY > topMinY; roadY--)
+			{
+				zoneTiles[convertIndex(topLeftX, roadY)].Update(overGround: 154);
+			}
+			zoneTiles[convertIndex(topLeftX, topMinY)].Update(overGround: 148);
+			for (int roadX = topLeftX + 1; roadX < centerX; roadX++)
+			{
+				zoneTiles[convertIndex(roadX, topMinY)].Update(overGround: 155);
+			}
+		}
+		if (topRightX != -1)
+		{
+			for (int roadY = topRightY; roadY > topMinY; roadY--)
+			{
+				zoneTiles[convertIndex(topRightX, roadY)].Update(overGround: 154);
+			}
+			zoneTiles[convertIndex(topRightX, topMinY)].Update(overGround: 149);
+			for (int roadX = topRightX - 1; roadX > centerX; roadX--)
+			{
+				zoneTiles[convertIndex(roadX, topMinY)].Update(overGround: 155);
+			}
+		}
+		if (botLeftX != -1)
+		{
+			for (int roadY = botLeftY; roadY > botMinY; roadY--)
+			{
+				zoneTiles[convertIndex(botLeftX, roadY)].Update(overGround: 154);
+			}
+			zoneTiles[convertIndex(botLeftX, botMinY)].Update(overGround: 148);
+			for (int roadX = botLeftX + 1; roadX < centerX; roadX++)
+			{
+				zoneTiles[convertIndex(roadX, botMinY)].Update(overGround: 155);
+			}
+		}
+		if (botRightX != -1)
+		{
+			for (int roadY = botRightY; roadY > botMinY; roadY--)
+			{
+				zoneTiles[convertIndex(botRightX, roadY)].Update(overGround: 154);
+			}
+			zoneTiles[convertIndex(botRightX, botMinY)].Update(overGround: 149);
+			for (int roadX = botRightX - 1; roadX > centerX; roadX--)
+			{
+				zoneTiles[convertIndex(roadX, botMinY)].Update(overGround: 155);
+			}
+		}
+		if (topLeftX != -1 && topRightX != -1)
+		{
+			zoneTiles[convertIndex(centerX, topMinY)].Update(overGround: 150);
+		}
+		else if (topLeftX != -1)
+		{
+			zoneTiles[convertIndex(centerX, topMinY)].Update(overGround: 147);
+		}
+		else
+		{
+			zoneTiles[convertIndex(centerX, topMinY)].Update(overGround: 146);
+		}
+		if (botLeftX != -1 && botRightX != -1)
+		{
+			zoneTiles[convertIndex(centerX, botMinY)].Update(overGround: 153);
+		}
+		else if (botLeftX != -1)
+		{
+			zoneTiles[convertIndex(centerX, botMinY)].Update(overGround: 149);
+		}
+		else
+		{
+			zoneTiles[convertIndex(centerX, botMinY)].Update(overGround: 148);
+		}
+		for (int roadY = topMinY - 1; roadY > botMinY; roadY--)
+		{
+			zoneTiles[convertIndex(centerX, roadY)].Update(overGround: 154);
+		}
 	}
 
 	/// <summary>
