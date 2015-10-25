@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
 	public const int CENTER_TILE_X = 10;
 	public const int CENTER_TILE_Y = 8;
 	public const int TURNS_PER_DAY = 360;
+	public const float MOVING_TRANSITION_TIME = 0.2f;
 
 	// Tile Sprite Sheets
 	public Sprite[] tileGround;
@@ -43,6 +44,17 @@ public class Game : MonoBehaviour
 	public int heroX;
 	public int heroY;
 	public int turnsTaken;
+	// Moving transition variables
+	public bool transitioning = false;
+	public float transitionTimeLeft;
+	public enum Direction
+	{
+		UP,
+		RIGHT,
+		DOWN,
+		LEFT
+	}
+	public Direction transitionDirection;
 
 	// Debug Variables
 	public bool debugOn = false;
@@ -178,7 +190,7 @@ public class Game : MonoBehaviour
 			}
 		}
 
-		updateHeroPosition();
+		updateHeroCameraOffset();
 		drawWorld();
 	}
 
@@ -187,6 +199,70 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
+		if (transitioning)
+		{
+			handleTransition();
+		}
+		else
+		{
+			handleInput();
+		}
+	}
+
+	/// <summary>
+	/// Handles the transition between tiles when moving.
+	/// </summary>
+	private void handleTransition()
+	{
+		transitionTimeLeft -= Time.deltaTime;
+		if (transitionTimeLeft <= 0)
+		{
+			board.transform.position = new Vector3(0, 0, 0);
+			transitioning = false;
+			switch (transitionDirection)
+			{
+				case Direction.UP:
+					heroY += 1;
+					break;
+				case Direction.DOWN:
+					heroY -= 1;
+					break;
+				case Direction.LEFT:
+					heroX -= 1;
+					break;
+				case Direction.RIGHT:
+					heroX += 1;
+					break;
+			}
+			updateHeroCameraOffset();
+			drawWorld();
+		}
+		else
+		{
+			switch (transitionDirection)
+			{
+				case Direction.UP:
+					board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					break;
+				case Direction.DOWN:
+					board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					break;
+				case Direction.LEFT:
+					board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					break;
+				case Direction.RIGHT:
+					board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					break;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Handles the user input.
+	/// </summary>
+	private void handleInput()
+	{
+		// Below is for debug purposes
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
 			debugOn = !debugOn;
@@ -200,45 +276,45 @@ public class Game : MonoBehaviour
 			heroY = world.spawnY;
 			drawWorld();
 		}
-
+		
 		if (Input.GetKey(KeyCode.W))
 		{
 			int newHeroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
-			if (!world.pathBlocked(heroX, newHeroY))
+			if (!world.pathBlocked(heroX, newHeroY) && newHeroY != heroY)
 			{
-				heroY = newHeroY;
-				updateHeroPosition();
-				drawWorld();
+				transitioning = true;
+				transitionDirection = Direction.UP;
+				transitionTimeLeft = MOVING_TRANSITION_TIME;
 			}
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
 			int newHeroY = Mathf.Max(0, heroY - 1);
-			if (!world.pathBlocked(heroX, newHeroY))
+			if (!world.pathBlocked(heroX, newHeroY) && newHeroY != heroY)
 			{
-				heroY = newHeroY;
-				updateHeroPosition();
-				drawWorld();
+				transitioning = true;
+				transitionDirection = Direction.DOWN;
+				transitionTimeLeft = MOVING_TRANSITION_TIME;
 			}
 		}
 		if (Input.GetKey(KeyCode.A))
 		{
 			int newHeroX = Mathf.Max(0, heroX - 1);
-			if (!world.pathBlocked(newHeroX, heroY))
+			if (!world.pathBlocked(newHeroX, heroY) && newHeroX != heroX)
 			{
-				heroX = newHeroX;
-				updateHeroPosition();
-				drawWorld();
+				transitioning = true;
+				transitionDirection = Direction.LEFT;
+				transitionTimeLeft = MOVING_TRANSITION_TIME;
 			}
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
 			int newHeroX = Mathf.Min(world.tilesWide - 1, heroX + 1);
-			if (!world.pathBlocked(newHeroX, heroY))
+			if (!world.pathBlocked(newHeroX, heroY) && newHeroX != heroX)
 			{
-				heroX = newHeroX;
-				updateHeroPosition();
-				drawWorld();
+				transitioning = true;
+				transitionDirection = Direction.RIGHT;
+				transitionTimeLeft = MOVING_TRANSITION_TIME;
 			}
 		}
 		if (Input.GetMouseButtonDown(0))
@@ -261,9 +337,9 @@ public class Game : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Updates the hero position.
+	/// Updates the camera to center or offset the hero on the screen.
 	/// </summary>
-	void updateHeroPosition()
+	void updateHeroCameraOffset()
 	{
 		turnsTaken++;
 		int x = CENTER_TILE_X;
