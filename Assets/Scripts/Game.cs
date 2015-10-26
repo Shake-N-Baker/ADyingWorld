@@ -190,7 +190,7 @@ public class Game : MonoBehaviour
 			}
 		}
 
-		updateHeroCameraOffset();
+		updateHeroOffset();
 		drawWorld();
 	}
 
@@ -217,8 +217,6 @@ public class Game : MonoBehaviour
 		transitionTimeLeft -= Time.deltaTime;
 		if (transitionTimeLeft <= 0)
 		{
-			board.transform.position = new Vector3(0, 0, 0);
-			transitioning = false;
 			switch (transitionDirection)
 			{
 				case Direction.UP:
@@ -234,26 +232,14 @@ public class Game : MonoBehaviour
 					heroX += 1;
 					break;
 			}
-			updateHeroCameraOffset();
+			transitioning = false;
+			board.transform.position = new Vector3(0, 0, 0);
+			updateHeroOffset();
 			drawWorld();
 		}
 		else
 		{
-			switch (transitionDirection)
-			{
-				case Direction.UP:
-					board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					break;
-				case Direction.DOWN:
-					board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					break;
-				case Direction.LEFT:
-					board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					break;
-				case Direction.RIGHT:
-					board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					break;
-			}
+			updateCamera();
 		}
 	}
 
@@ -263,7 +249,7 @@ public class Game : MonoBehaviour
 	private void handleInput()
 	{
 		// Below is for debug purposes
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.F))
 		{
 			debugOn = !debugOn;
 			drawWorld();
@@ -275,10 +261,20 @@ public class Game : MonoBehaviour
 			heroX = world.spawnX;
 			heroY = world.spawnY;
 			drawWorld();
+			updateHeroOffset();
 		}
-		
+
+		if (Input.GetKey(KeyCode.Q))
+		{
+			// Cancel, Open/Close Menu
+		}
+		if (Input.GetKey(KeyCode.E))
+		{
+			// Confirm
+		}
 		if (Input.GetKey(KeyCode.W))
 		{
+			// Movement up
 			int newHeroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
 			if (!world.pathBlocked(heroX, newHeroY) && newHeroY != heroY)
 			{
@@ -289,6 +285,7 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetKey(KeyCode.S))
 		{
+			// Movement down
 			int newHeroY = Mathf.Max(0, heroY - 1);
 			if (!world.pathBlocked(heroX, newHeroY) && newHeroY != heroY)
 			{
@@ -299,6 +296,7 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetKey(KeyCode.A))
 		{
+			// Movement left
 			int newHeroX = Mathf.Max(0, heroX - 1);
 			if (!world.pathBlocked(newHeroX, heroY) && newHeroX != heroX)
 			{
@@ -309,6 +307,7 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetKey(KeyCode.D))
 		{
+			// Movement right
 			int newHeroX = Mathf.Min(world.tilesWide - 1, heroX + 1);
 			if (!world.pathBlocked(newHeroX, heroY) && newHeroX != heroX)
 			{
@@ -337,9 +336,112 @@ public class Game : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Updates the camera to center or offset the hero on the screen.
+	/// Updates the board and hero positions on the screen.
 	/// </summary>
-	void updateHeroCameraOffset()
+	private void updateCamera()
+	{
+		int x = CENTER_TILE_X;
+		int y = CENTER_TILE_Y;
+		int newHeroX = heroX;
+		int newHeroY = heroY;
+		
+		switch (transitionDirection)
+		{
+			case Direction.UP:
+				newHeroY += 1;
+				if (world.tilesHigh >= VIEW_TILES_HIGH)
+				{
+					if (newHeroY < CENTER_TILE_Y || heroY < CENTER_TILE_Y)
+					{
+						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else if (newHeroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y) || heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+					{
+						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else
+					{
+						board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+				}
+				else
+				{
+					hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+				}
+				break;
+			case Direction.DOWN:
+				newHeroY -= 1;
+				if (world.tilesHigh >= VIEW_TILES_HIGH)
+				{
+					if (newHeroY < CENTER_TILE_Y || heroY < CENTER_TILE_Y)
+					{
+						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else if (newHeroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y) || heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+					{
+						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else
+					{
+						board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+				}
+				else
+				{
+					hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+				}
+				break;
+			case Direction.LEFT:
+				newHeroX -= 1;
+				if (world.tilesWide >= VIEW_TILES_WIDE)
+				{
+					if (newHeroX < CENTER_TILE_X || heroX < CENTER_TILE_X)
+					{
+						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else if (newHeroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X) || heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+					{
+						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else
+					{
+						board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+				}
+				else
+				{
+					hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+				}
+				break;
+			case Direction.RIGHT:
+				newHeroX += 1;
+				if (world.tilesWide >= VIEW_TILES_WIDE)
+				{
+					if (newHeroX < CENTER_TILE_X || heroX < CENTER_TILE_X)
+					{
+						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else if (newHeroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X) || heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+					{
+						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					else
+					{
+						board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+				}
+				else
+				{
+					hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+				}
+				break;
+		}
+	}
+	
+	/// <summary>
+	/// Updates the position of the hero on the screen.
+	/// </summary>
+	private void updateHeroOffset()
 	{
 		turnsTaken++;
 		int x = CENTER_TILE_X;
@@ -380,7 +482,7 @@ public class Game : MonoBehaviour
 	/// <summary>
 	/// Draws the world.
 	/// </summary>
-	void drawWorld()
+	private void drawWorld()
 	{
 		float tint = world.getDayTimeTint(turnsTaken, TURNS_PER_DAY);
 		Color tintColor = new Color(tint, tint, tint, 1);
