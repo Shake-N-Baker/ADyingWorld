@@ -236,6 +236,31 @@ public class World
 	}
 
 	/// <summary>
+	/// Changes the sprite for animation tiles.
+	/// </summary>
+	public void changeTileAnimations()
+	{
+		for (int i = 0; i < tiles.Length; i++)
+		{
+			switch (tiles[i].wallTableDecoration)
+			{
+				case 359:
+					tiles[i].wallTableDecoration = 360;
+					break;
+				case 360:
+					tiles[i].wallTableDecoration = 359;
+					break;
+				case 529:
+					tiles[i].wallTableDecoration = 530;
+					break;
+				case 530:
+					tiles[i].wallTableDecoration = 529;
+					break;
+			}
+		}
+	}
+
+	/// <summary>
 	/// Converts the width and height to an array index.
 	/// </summary>
 	/// <returns>The index inside the world array.</returns>

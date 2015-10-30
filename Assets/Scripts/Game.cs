@@ -13,6 +13,7 @@ public class Game : MonoBehaviour
 	public const int CENTER_TILE_Y = 8;
 	public const int TURNS_PER_DAY = 360;
 	public const float MOVING_TRANSITION_TIME = 0.2f;
+	public const float ANIMATE_TILE_TIME = 0.25f;
 
 	// Tile Sprite Sheets
 	public Sprite[] tileGround;
@@ -44,6 +45,7 @@ public class Game : MonoBehaviour
 	public int heroX;
 	public int heroY;
 	public int turnsTaken;
+	public float changeTileAnimateTimeLeft;
 	// Moving transition variables
 	public bool transitioning = false;
 	public float transitionTimeLeft;
@@ -190,8 +192,7 @@ public class Game : MonoBehaviour
 			}
 		}
 
-		updateHeroOffset();
-		drawWorld();
+		updateCamera();
 	}
 
 	/// <summary>
@@ -206,6 +207,21 @@ public class Game : MonoBehaviour
 		else
 		{
 			handleInput();
+		}
+		handleTileAnimation();
+		drawWorld();
+	}
+
+	/// <summary>
+	/// Handles the tile animations.
+	/// </summary>
+	private void handleTileAnimation()
+	{
+		changeTileAnimateTimeLeft -= Time.deltaTime;
+		if (changeTileAnimateTimeLeft <= 0)
+		{
+			changeTileAnimateTimeLeft = ANIMATE_TILE_TIME;
+			world.changeTileAnimations();
 		}
 	}
 
@@ -234,13 +250,8 @@ public class Game : MonoBehaviour
 			}
 			transitioning = false;
 			board.transform.position = new Vector3(0, 0, 0);
-			updateHeroOffset();
-			drawWorld();
 		}
-		else
-		{
-			updateCamera();
-		}
+		updateCamera();
 	}
 
 	/// <summary>
@@ -252,7 +263,6 @@ public class Game : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.F))
 		{
 			debugOn = !debugOn;
-			drawWorld();
 		}
 		if (Input.GetKeyDown(KeyCode.R))
 		{
@@ -260,8 +270,7 @@ public class Game : MonoBehaviour
 			turnsTaken = 0;
 			heroX = world.spawnX;
 			heroY = world.spawnY;
-			drawWorld();
-			updateHeroOffset();
+			updateCamera();
 		}
 
 		bool turnTaken = false;
@@ -351,140 +360,138 @@ public class Game : MonoBehaviour
 	{
 		int x = CENTER_TILE_X;
 		int y = CENTER_TILE_Y;
-		int newHeroX = heroX;
-		int newHeroY = heroY;
-		
-		switch (transitionDirection)
+
+		if (!transitioning)
 		{
-			case Direction.UP:
-				newHeroY += 1;
-				if (world.tilesHigh >= VIEW_TILES_HIGH)
-				{
-					if (heroY < CENTER_TILE_Y)
-					{
-						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else if (newHeroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
-					{
-						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
-						board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-				}
-				else
-				{
-					hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-				}
-				break;
-			case Direction.DOWN:
-				newHeroY -= 1;
-				if (world.tilesHigh >= VIEW_TILES_HIGH)
-				{
-					if (newHeroY < CENTER_TILE_Y)
-					{
-						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
-					{
-						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
-						board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-				}
-				else
-				{
-					hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-				}
-				break;
-			case Direction.LEFT:
-				newHeroX -= 1;
-				if (world.tilesWide >= VIEW_TILES_WIDE)
-				{
-					if (newHeroX < CENTER_TILE_X)
-					{
-						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
-					{
-						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
-						board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-				}
-				else
-				{
-					hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-				}
-				break;
-			case Direction.RIGHT:
-				newHeroX += 1;
-				if (world.tilesWide >= VIEW_TILES_WIDE)
-				{
-					if (heroX < CENTER_TILE_X)
-					{
-						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else if (newHeroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
-					{
-						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
-						board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-				}
-				else
-				{
-					hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-				}
-				break;
-		}
-	}
-	
-	/// <summary>
-	/// Updates the position of the hero on the screen.
-	/// </summary>
-	private void updateHeroOffset()
-	{
-		int x = CENTER_TILE_X;
-		int y = CENTER_TILE_Y;
-		if (world.tilesWide >= VIEW_TILES_WIDE)
-		{
-			if (heroX < CENTER_TILE_X)
+			if (world.tilesWide >= VIEW_TILES_WIDE)
 			{
-				x = heroX;
+				if (heroX < CENTER_TILE_X)
+				{
+					x = heroX;
+				}
+				else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+				{
+					x = CENTER_TILE_X + (heroX - ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X));
+				}
 			}
-			else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+			else
 			{
-				x = CENTER_TILE_X + (heroX - ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X));
+				x = ((VIEW_TILES_WIDE - world.tilesWide) / 2) + heroX;
 			}
+			if (world.tilesHigh >= VIEW_TILES_HIGH)
+			{
+				if (heroY < CENTER_TILE_Y)
+				{
+					y = heroY;
+				}
+				else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+				{
+					y = CENTER_TILE_Y + (heroY - ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y));
+				}
+			}
+			else
+			{
+				y = ((VIEW_TILES_HIGH - world.tilesHigh) / 2) + heroY;
+			}
+			hero.transform.position = new Vector3(16 * x, 16 * y, 0);
 		}
 		else
 		{
-			x = ((VIEW_TILES_WIDE - world.tilesWide) / 2) + heroX;
-		}
-		if (world.tilesHigh >= VIEW_TILES_HIGH)
-		{
-			if (heroY < CENTER_TILE_Y)
+			int newHeroX = heroX;
+			int newHeroY = heroY;
+			
+			switch (transitionDirection)
 			{
-				y = heroY;
-			}
-			else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
-			{
-				y = CENTER_TILE_Y + (heroY - ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y));
+				case Direction.UP:
+					newHeroY += 1;
+					if (world.tilesHigh >= VIEW_TILES_HIGH)
+					{
+						if (heroY < CENTER_TILE_Y)
+						{
+							hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else if (newHeroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+						{
+							hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else
+						{
+							board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+					}
+					else
+					{
+						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					break;
+				case Direction.DOWN:
+					newHeroY -= 1;
+					if (world.tilesHigh >= VIEW_TILES_HIGH)
+					{
+						if (newHeroY < CENTER_TILE_Y)
+						{
+							hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+						{
+							hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else
+						{
+							board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+					}
+					else
+					{
+						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					break;
+				case Direction.LEFT:
+					newHeroX -= 1;
+					if (world.tilesWide >= VIEW_TILES_WIDE)
+					{
+						if (newHeroX < CENTER_TILE_X)
+						{
+							hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+						{
+							hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else
+						{
+							board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+					}
+					else
+					{
+						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					break;
+				case Direction.RIGHT:
+					newHeroX += 1;
+					if (world.tilesWide >= VIEW_TILES_WIDE)
+					{
+						if (heroX < CENTER_TILE_X)
+						{
+							hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else if (newHeroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+						{
+							hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+						else
+						{
+							board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						}
+					}
+					else
+					{
+						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+					}
+					break;
 			}
 		}
-		else
-		{
-			y = ((VIEW_TILES_HIGH - world.tilesHigh) / 2) + heroY;
-		}
-		hero.transform.position = new Vector3(16 * x, 16 * y, 0);
 	}
 
 	/// <summary>
