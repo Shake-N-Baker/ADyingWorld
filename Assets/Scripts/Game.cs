@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum Direction
+{
+	NONE,
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+}
+
 /// <summary>
 /// The class for running the game.
 /// </summary>
 public class Game : MonoBehaviour
 {
 	// Constants
-	public const int VIEW_TILES_WIDE = 20;
-	public const int VIEW_TILES_HIGH = 18;
-	public const int CENTER_TILE_X = 10;
-	public const int CENTER_TILE_Y = 8;
 	public const int TURNS_PER_DAY = 360;
 	public const float MOVING_TRANSITION_TIME = 0.2f;
 	public const float ANIMATE_TILE_TIME = 0.25f;
@@ -39,23 +44,20 @@ public class Game : MonoBehaviour
 	public GameObject board;
 	public GameObject[,,] tiles;
 	public GameObject hero;
+	public CharacterDisplay heroChar;
 
 	// Game Variables
 	public string[] layers;
 	public int heroX;
 	public int heroY;
+	public Camera camera;
+	public int smallWorldDrawOffsetX;
+	public int smallWorldDrawOffsetY;
 	public int turnsTaken;
 	public float changeTileAnimateTimeLeft;
 	// Moving transition variables
 	public bool transitioning = false;
 	public float transitionTimeLeft;
-	public enum Direction
-	{
-		UP,
-		RIGHT,
-		DOWN,
-		LEFT
-	}
 	public Direction transitionDirection;
 
 	// Debug Variables
@@ -97,61 +99,31 @@ public class Game : MonoBehaviour
 	void Start()
 	{
 		world = new World();
+		camera = new Camera(world, world.spawnX, world.spawnY);
+		smallWorldDrawOffsetX = (Camera.VIEW_TILES_WIDE - world.tilesWide) / 2;
+		smallWorldDrawOffsetY = (Camera.VIEW_TILES_HIGH - world.tilesHigh) / 2;
+		if (smallWorldDrawOffsetX < 0)
+		{
+			smallWorldDrawOffsetX = 0;
+		}
+		if (smallWorldDrawOffsetY < 0)
+		{
+			smallWorldDrawOffsetY = 0;
+		}
 		turnsTaken = 0;
 
 		hero = new GameObject();
 		heroX = world.spawnX;
 		heroY = world.spawnY;
 		hero.name = "Hero";
-		GameObject charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charWeapon[Random.Range(0, charWeapon.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharWeapon";
-		charComponent.transform.parent = hero.transform;
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charShield[Random.Range(0, charShield.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharShield";
-		charComponent.transform.parent = hero.transform;
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charHead[Random.Range(0, charHead.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharHead";
-		charComponent.transform.parent = hero.transform;
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charTorso[Random.Range(0, charTorso.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharTorso";
-		charComponent.transform.parent = hero.transform;
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charLegs[Random.Range(0, charLegs.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharLegs";
-		charComponent.transform.parent = hero.transform;
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charHair[Random.Range(0, charHair.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharHair";
-		charComponent.transform.parent = hero.transform;
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = charBase[Random.Range(0, charBase.Length)];
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharBase";
-		charComponent.transform.parent = hero.transform;
+		heroChar = new CharacterDisplay(hero.transform);
+		heroChar.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
+		heroChar.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
+		heroChar.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
+		heroChar.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
+		heroChar.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
+		heroChar.shieldComponent.sprite = charShield[Random.Range(0, charShield.Length)];
+		heroChar.weaponComponent.sprite = charWeapon[Random.Range(0, charWeapon.Length)];
 
 		layers = new string[]{
 			"Ground",
@@ -166,18 +138,18 @@ public class Game : MonoBehaviour
 		// Setup the board
 		board = new GameObject();
 		board.name = "Board";
-		tiles = new GameObject[layers.Length, VIEW_TILES_WIDE + 2, VIEW_TILES_HIGH + 2];
+		tiles = new GameObject[layers.Length, Camera.VIEW_TILES_WIDE + 2, Camera.VIEW_TILES_HIGH + 2];
 
 		// Add tiles for each layer on the main screen and just off screen for transitions
 		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
 		{
 			string layer = layers[layerIndex];
-			for (int x = -1; x <= VIEW_TILES_WIDE; x++)
+			for (int x = -1; x <= Camera.VIEW_TILES_WIDE; x++)
 			{
-				for (int y = -1; y <= VIEW_TILES_HIGH; y++)
+				for (int y = -1; y <= Camera.VIEW_TILES_HIGH; y++)
 				{
 					// Don't tile the corners off screen
-					if ((x == -1 || x == VIEW_TILES_WIDE) && (y == -1 || y == VIEW_TILES_HIGH))
+					if ((x == -1 || x == Camera.VIEW_TILES_WIDE) && (y == -1 || y == Camera.VIEW_TILES_HIGH))
 					{
 						continue;
 					}
@@ -249,6 +221,8 @@ public class Game : MonoBehaviour
 					break;
 			}
 			transitioning = false;
+			transitionDirection = Direction.NONE;
+			camera.finishTransition();
 			board.transform.position = new Vector3(0, 0, 0);
 		}
 		updateCamera();
@@ -332,24 +306,21 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
-			GameObject component = GameObject.Find("CharBase");
-			component.GetComponent<SpriteRenderer>().sprite = charBase[Random.Range(0, charBase.Length)];
-			component = GameObject.Find("CharHair");
-			component.GetComponent<SpriteRenderer>().sprite = charHair[Random.Range(0, charHair.Length)];
-			component = GameObject.Find("CharLegs");
-			component.GetComponent<SpriteRenderer>().sprite = charLegs[Random.Range(0, charLegs.Length)];
-			component = GameObject.Find("CharTorso");
-			component.GetComponent<SpriteRenderer>().sprite = charTorso[Random.Range(0, charTorso.Length)];
-			component = GameObject.Find("CharHead");
-			component.GetComponent<SpriteRenderer>().sprite = charHead[Random.Range(0, charHead.Length)];
-			component = GameObject.Find("CharShield");
-			component.GetComponent<SpriteRenderer>().sprite = (Random.Range(0, 2) == 1 ? charShield[Random.Range(0, charShield.Length)] : null);
-			component = GameObject.Find("CharWeapon");
-			component.GetComponent<SpriteRenderer>().sprite = (Random.Range(0, 2) == 1 ? charWeapon[Random.Range(0, charWeapon.Length)] : null);
+			heroChar.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
+			heroChar.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
+			heroChar.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
+			heroChar.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
+			heroChar.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
+			heroChar.shieldComponent.sprite = (Random.Range(0, 2) == 1 ? charShield[Random.Range(0, charShield.Length)] : null);
+			heroChar.weaponComponent.sprite = (Random.Range(0, 2) == 1 ? charWeapon[Random.Range(0, charWeapon.Length)] : null);
 		}
 		if (turnTaken)
 		{
 			turnsTaken++;
+		}
+		if (transitioning)
+		{
+			camera.transitioning(transitionDirection);
 		}
 	}
 
@@ -358,42 +329,12 @@ public class Game : MonoBehaviour
 	/// </summary>
 	private void updateCamera()
 	{
-		int x = CENTER_TILE_X;
-		int y = CENTER_TILE_Y;
+		int x = Camera.CENTER_TILE_X;
+		int y = Camera.CENTER_TILE_Y;
 
 		if (!transitioning)
 		{
-			if (world.tilesWide >= VIEW_TILES_WIDE)
-			{
-				if (heroX < CENTER_TILE_X)
-				{
-					x = heroX;
-				}
-				else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
-				{
-					x = CENTER_TILE_X + (heroX - ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X));
-				}
-			}
-			else
-			{
-				x = ((VIEW_TILES_WIDE - world.tilesWide) / 2) + heroX;
-			}
-			if (world.tilesHigh >= VIEW_TILES_HIGH)
-			{
-				if (heroY < CENTER_TILE_Y)
-				{
-					y = heroY;
-				}
-				else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
-				{
-					y = CENTER_TILE_Y + (heroY - ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y));
-				}
-			}
-			else
-			{
-				y = ((VIEW_TILES_HIGH - world.tilesHigh) / 2) + heroY;
-			}
-			hero.transform.position = new Vector3(16 * x, 16 * y, 0);
+			hero.transform.position = new Vector3(16 * (camera.focusX + smallWorldDrawOffsetX - camera.xMin), 16 * (camera.focusY + smallWorldDrawOffsetY - camera.yMin), 0);
 		}
 		else
 		{
@@ -404,13 +345,13 @@ public class Game : MonoBehaviour
 			{
 				case Direction.UP:
 					newHeroY += 1;
-					if (world.tilesHigh >= VIEW_TILES_HIGH)
+					if (world.tilesHigh >= Camera.VIEW_TILES_HIGH)
 					{
-						if (heroY < CENTER_TILE_Y)
+						if (heroY < Camera.CENTER_TILE_Y)
 						{
 							hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
-						else if (newHeroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+						else if (newHeroY > ((world.tilesHigh - Camera.VIEW_TILES_HIGH) + Camera.CENTER_TILE_Y))
 						{
 							hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
@@ -426,13 +367,13 @@ public class Game : MonoBehaviour
 					break;
 				case Direction.DOWN:
 					newHeroY -= 1;
-					if (world.tilesHigh >= VIEW_TILES_HIGH)
+					if (world.tilesHigh >= Camera.VIEW_TILES_HIGH)
 					{
-						if (newHeroY < CENTER_TILE_Y)
+						if (newHeroY < Camera.CENTER_TILE_Y)
 						{
 							hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
-						else if (heroY > ((world.tilesHigh - VIEW_TILES_HIGH) + CENTER_TILE_Y))
+						else if (heroY > ((world.tilesHigh - Camera.VIEW_TILES_HIGH) + Camera.CENTER_TILE_Y))
 						{
 							hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
@@ -448,13 +389,13 @@ public class Game : MonoBehaviour
 					break;
 				case Direction.LEFT:
 					newHeroX -= 1;
-					if (world.tilesWide >= VIEW_TILES_WIDE)
+					if (world.tilesWide >= Camera.VIEW_TILES_WIDE)
 					{
-						if (newHeroX < CENTER_TILE_X)
+						if (newHeroX < Camera.CENTER_TILE_X)
 						{
 							hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
-						else if (heroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+						else if (heroX > ((world.tilesWide - Camera.VIEW_TILES_WIDE) + Camera.CENTER_TILE_X))
 						{
 							hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
@@ -470,13 +411,13 @@ public class Game : MonoBehaviour
 					break;
 				case Direction.RIGHT:
 					newHeroX += 1;
-					if (world.tilesWide >= VIEW_TILES_WIDE)
+					if (world.tilesWide >= Camera.VIEW_TILES_WIDE)
 					{
-						if (heroX < CENTER_TILE_X)
+						if (heroX < Camera.CENTER_TILE_X)
 						{
 							hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
-						else if (newHeroX > ((world.tilesWide - VIEW_TILES_WIDE) + CENTER_TILE_X))
+						else if (newHeroX > ((world.tilesWide - Camera.VIEW_TILES_WIDE) + Camera.CENTER_TILE_X))
 						{
 							hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 						}
@@ -501,43 +442,27 @@ public class Game : MonoBehaviour
 	{
 		float tint = world.getDayTimeTint(turnsTaken, TURNS_PER_DAY);
 		Color tintColor = new Color(tint, tint, tint, 1);
-		int cameraOffX, cameraOffY;
-		if (world.tilesWide >= VIEW_TILES_WIDE)
-		{
-			cameraOffX = Mathf.Min(Mathf.Max(heroX - CENTER_TILE_X, 0), world.tilesWide - VIEW_TILES_WIDE);
-		}
-		else
-		{
-			cameraOffX = -(VIEW_TILES_WIDE - world.tilesWide) / 2;
-		}
-		if (world.tilesHigh >= VIEW_TILES_HIGH)
-		{
-			cameraOffY = Mathf.Min(Mathf.Max(heroY - CENTER_TILE_Y, 0), world.tilesHigh - VIEW_TILES_HIGH);
-		}
-		else
-		{
-			cameraOffY = -(VIEW_TILES_HIGH - world.tilesHigh) / 2;
-		}
+		// Loop through each layer, ground, overground etc.
 		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
 		{
 			string layer = layers[layerIndex];
-			for (int x = -1; x <= VIEW_TILES_WIDE; x++)
+			for (int x = -1; x <= Camera.VIEW_TILES_WIDE; x++)
 			{
-				for (int y = -1; y <= VIEW_TILES_HIGH; y++)
+				for (int y = -1; y <= Camera.VIEW_TILES_HIGH; y++)
 				{
 					// Skip the corners off screen
-					if ((x == -1 || x == VIEW_TILES_WIDE) && (y == -1 || y == VIEW_TILES_HIGH))
+					if ((x == -1 || x == Camera.VIEW_TILES_WIDE) && (y == -1 || y == Camera.VIEW_TILES_HIGH))
 					{
 						continue;
 					}
-					int tileType = world.getTile(layer, cameraOffX + x, cameraOffY + y);
+					int tileType = world.getTile(layer, camera.xMin - smallWorldDrawOffsetX + x, camera.yMin - smallWorldDrawOffsetY + y);
 					GameObject tile = tiles[layerIndex, x + 1, y + 1];
 					if (tileType != -1)
 					{
-						int lightLevel = world.getLightLevel(cameraOffX + x, cameraOffY + y);
+						int lightLevel = world.getLightLevel(camera.xMin - smallWorldDrawOffsetX + x, camera.yMin - smallWorldDrawOffsetY + y);
 						tile.GetComponent<SpriteRenderer>().sprite = tileLayer[layerIndex][tileType];
 
-						bool pathBlock = world.pathBlocked(cameraOffX + x, cameraOffY + y);
+						bool pathBlock = world.pathBlocked(camera.xMin - smallWorldDrawOffsetX + x, camera.yMin - smallWorldDrawOffsetY + y);
 						if (pathBlock && debugOn)
 						{
 							tile.GetComponent<SpriteRenderer>().material.color = debugPathBlockColor;

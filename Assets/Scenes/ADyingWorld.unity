@@ -203,5 +203,9 @@ MonoBehaviour:
   heroX: 0
   heroY: 0
   turnsTaken: 0
+  changeTileAnimateTimeLeft: 0
+  transitioning: 0
+  transitionTimeLeft: 0
+  transitionDirection: 0
   debugOn: 0
   debugPathBlockColor: {r: 1, g: .600000024, b: .600000024, a: 1}
