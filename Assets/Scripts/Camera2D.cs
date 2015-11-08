@@ -1,10 +1,10 @@
 ﻿using System;
 
 /// <summary>
-/// The camera class holds data for the current viewport
+/// The camera 2d class holds data for the current viewport
 /// of the world shown in focus.
 /// </summary>
-public class Camera
+public class Camera2D
 {
 	// Constants
 	public const int VIEW_TILES_WIDE = 20;
@@ -63,7 +63,7 @@ public class Camera
 	/// <param name="world">The world the camera is focusing on.</param>
 	/// <param name="x">The x coordinate in focus.</param>
 	/// <param name="y">The y coordinate in focus.</param>
-	public Camera(World world, int x, int y)
+	public Camera2D(World world, int x, int y)
 	{
 		this.world = world;
 		this.focusX = x;

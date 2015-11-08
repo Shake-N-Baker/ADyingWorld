@@ -50,11 +50,12 @@ public class Game : MonoBehaviour
 	public string[] layers;
 	public int heroX;
 	public int heroY;
-	public Camera camera;
+	public Camera2D camera2D;
 	public int smallWorldDrawOffsetX;
 	public int smallWorldDrawOffsetY;
 	public int turnsTaken;
 	public float changeTileAnimateTimeLeft;
+
 	// Moving transition variables
 	public bool transitioning = false;
 	public float transitionTimeLeft;
@@ -99,9 +100,9 @@ public class Game : MonoBehaviour
 	void Start()
 	{
 		world = new World();
-		camera = new Camera(world, world.spawnX, world.spawnY);
-		smallWorldDrawOffsetX = (Camera.VIEW_TILES_WIDE - world.tilesWide) / 2;
-		smallWorldDrawOffsetY = (Camera.VIEW_TILES_HIGH - world.tilesHigh) / 2;
+		camera2D = new Camera2D(world, world.spawnX, world.spawnY);
+		smallWorldDrawOffsetX = (Camera2D.VIEW_TILES_WIDE - world.tilesWide) / 2;
+		smallWorldDrawOffsetY = (Camera2D.VIEW_TILES_HIGH - world.tilesHigh) / 2;
 		if (smallWorldDrawOffsetX < 0)
 		{
 			smallWorldDrawOffsetX = 0;
@@ -138,18 +139,18 @@ public class Game : MonoBehaviour
 		// Setup the board
 		board = new GameObject();
 		board.name = "Board";
-		tiles = new GameObject[layers.Length, Camera.VIEW_TILES_WIDE + 2, Camera.VIEW_TILES_HIGH + 2];
+		tiles = new GameObject[layers.Length, Camera2D.VIEW_TILES_WIDE + 2, Camera2D.VIEW_TILES_HIGH + 2];
 
 		// Add tiles for each layer on the main screen and just off screen for transitions
 		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
 		{
 			string layer = layers[layerIndex];
-			for (int x = -1; x <= Camera.VIEW_TILES_WIDE; x++)
+			for (int x = -1; x <= Camera2D.VIEW_TILES_WIDE; x++)
 			{
-				for (int y = -1; y <= Camera.VIEW_TILES_HIGH; y++)
+				for (int y = -1; y <= Camera2D.VIEW_TILES_HIGH; y++)
 				{
 					// Don't tile the corners off screen
-					if ((x == -1 || x == Camera.VIEW_TILES_WIDE) && (y == -1 || y == Camera.VIEW_TILES_HIGH))
+					if ((x == -1 || x == Camera2D.VIEW_TILES_WIDE) && (y == -1 || y == Camera2D.VIEW_TILES_HIGH))
 					{
 						continue;
 					}
@@ -222,7 +223,7 @@ public class Game : MonoBehaviour
 			}
 			transitioning = false;
 			transitionDirection = Direction.NONE;
-			camera.finishTransition();
+			camera2D.finishTransition();
 			board.transform.position = new Vector3(0, 0, 0);
 		}
 		updateCamera();
@@ -320,7 +321,7 @@ public class Game : MonoBehaviour
 		}
 		if (transitioning)
 		{
-			camera.transitioning(transitionDirection);
+			camera2D.transitioning(transitionDirection);
 		}
 	}
 
@@ -331,14 +332,14 @@ public class Game : MonoBehaviour
 	{
 		if (!transitioning)
 		{
-			hero.transform.position = new Vector3(16 * (camera.focusX + smallWorldDrawOffsetX - camera.xMin), 16 * (camera.focusY + smallWorldDrawOffsetY - camera.yMin), 0);
+			hero.transform.position = new Vector3(16 * (camera2D.focusX + smallWorldDrawOffsetX - camera2D.xMin), 16 * (camera2D.focusY + smallWorldDrawOffsetY - camera2D.yMin), 0);
 		}
 		else
 		{
 			switch (transitionDirection)
 			{
 				case Direction.UP:
-					if ((camera.newYMin <= 0) || (camera.yMax >= (world.tilesHigh - 1)))
+					if ((camera2D.newYMin <= 0) || (camera2D.yMax >= (world.tilesHigh - 1)))
 					{
 						// Camera is on the border, just move the hero
 						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
@@ -349,7 +350,7 @@ public class Game : MonoBehaviour
 					}
 					break;
 				case Direction.DOWN:
-					if ((camera.yMin <= 0) || (camera.newYMax >= (world.tilesHigh - 1)))
+					if ((camera2D.yMin <= 0) || (camera2D.newYMax >= (world.tilesHigh - 1)))
 					{
 						// Camera is on the border, just move the hero
 						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
@@ -360,7 +361,7 @@ public class Game : MonoBehaviour
 					}
 					break;
 				case Direction.LEFT:
-					if ((camera.xMin <= 0) || (camera.newXMax >= (world.tilesWide - 1)))
+					if ((camera2D.xMin <= 0) || (camera2D.newXMax >= (world.tilesWide - 1)))
 					{
 						// Camera is on the border, just move the hero
 						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
@@ -371,7 +372,7 @@ public class Game : MonoBehaviour
 					}
 					break;
 				case Direction.RIGHT:
-					if ((camera.newXMin <= 0) || (camera.xMax >= (world.tilesWide - 1)))
+					if ((camera2D.newXMin <= 0) || (camera2D.xMax >= (world.tilesWide - 1)))
 					{
 						// Camera is on the border, just move the hero
 						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
@@ -396,23 +397,23 @@ public class Game : MonoBehaviour
 		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
 		{
 			string layer = layers[layerIndex];
-			for (int x = -1; x <= Camera.VIEW_TILES_WIDE; x++)
+			for (int x = -1; x <= Camera2D.VIEW_TILES_WIDE; x++)
 			{
-				for (int y = -1; y <= Camera.VIEW_TILES_HIGH; y++)
+				for (int y = -1; y <= Camera2D.VIEW_TILES_HIGH; y++)
 				{
 					// Skip the corners off screen
-					if ((x == -1 || x == Camera.VIEW_TILES_WIDE) && (y == -1 || y == Camera.VIEW_TILES_HIGH))
+					if ((x == -1 || x == Camera2D.VIEW_TILES_WIDE) && (y == -1 || y == Camera2D.VIEW_TILES_HIGH))
 					{
 						continue;
 					}
-					int tileType = world.getTile(layer, camera.xMin - smallWorldDrawOffsetX + x, camera.yMin - smallWorldDrawOffsetY + y);
+					int tileType = world.getTile(layer, camera2D.xMin - smallWorldDrawOffsetX + x, camera2D.yMin - smallWorldDrawOffsetY + y);
 					GameObject tile = tiles[layerIndex, x + 1, y + 1];
 					if (tileType != -1)
 					{
-						int lightLevel = world.getLightLevel(camera.xMin - smallWorldDrawOffsetX + x, camera.yMin - smallWorldDrawOffsetY + y);
+						int lightLevel = world.getLightLevel(camera2D.xMin - smallWorldDrawOffsetX + x, camera2D.yMin - smallWorldDrawOffsetY + y);
 						tile.GetComponent<SpriteRenderer>().sprite = tileLayer[layerIndex][tileType];
 
-						bool pathBlock = world.pathBlocked(camera.xMin - smallWorldDrawOffsetX + x, camera.yMin - smallWorldDrawOffsetY + y);
+						bool pathBlock = world.pathBlocked(camera2D.xMin - smallWorldDrawOffsetX + x, camera2D.yMin - smallWorldDrawOffsetY + y);
 						if (pathBlock && debugOn)
 						{
 							tile.GetComponent<SpriteRenderer>().material.color = debugPathBlockColor;
