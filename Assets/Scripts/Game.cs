@@ -329,106 +329,56 @@ public class Game : MonoBehaviour
 	/// </summary>
 	private void updateCamera()
 	{
-		int x = Camera.CENTER_TILE_X;
-		int y = Camera.CENTER_TILE_Y;
-
 		if (!transitioning)
 		{
 			hero.transform.position = new Vector3(16 * (camera.focusX + smallWorldDrawOffsetX - camera.xMin), 16 * (camera.focusY + smallWorldDrawOffsetY - camera.yMin), 0);
 		}
 		else
 		{
-			int newHeroX = heroX;
-			int newHeroY = heroY;
-			
 			switch (transitionDirection)
 			{
 				case Direction.UP:
-					newHeroY += 1;
-					if (world.tilesHigh >= Camera.VIEW_TILES_HIGH)
+					if ((camera.newYMin <= 0) || (camera.yMax >= (world.tilesHigh - 1)))
 					{
-						if (heroY < Camera.CENTER_TILE_Y)
-						{
-							hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else if (newHeroY > ((world.tilesHigh - Camera.VIEW_TILES_HIGH) + Camera.CENTER_TILE_Y))
-						{
-							hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else
-						{
-							board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
+						// Camera is on the border, just move the hero
+						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					else
 					{
-						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 				case Direction.DOWN:
-					newHeroY -= 1;
-					if (world.tilesHigh >= Camera.VIEW_TILES_HIGH)
+					if ((camera.yMin <= 0) || (camera.newYMax >= (world.tilesHigh - 1)))
 					{
-						if (newHeroY < Camera.CENTER_TILE_Y)
-						{
-							hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else if (heroY > ((world.tilesHigh - Camera.VIEW_TILES_HIGH) + Camera.CENTER_TILE_Y))
-						{
-							hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else
-						{
-							board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
+						// Camera is on the border, just move the hero
+						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					else
 					{
-						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 				case Direction.LEFT:
-					newHeroX -= 1;
-					if (world.tilesWide >= Camera.VIEW_TILES_WIDE)
+					if ((camera.xMin <= 0) || (camera.newXMax >= (world.tilesWide - 1)))
 					{
-						if (newHeroX < Camera.CENTER_TILE_X)
-						{
-							hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else if (heroX > ((world.tilesWide - Camera.VIEW_TILES_WIDE) + Camera.CENTER_TILE_X))
-						{
-							hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else
-						{
-							board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
+						// Camera is on the border, just move the hero
+						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					else
 					{
-						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 				case Direction.RIGHT:
-					newHeroX += 1;
-					if (world.tilesWide >= Camera.VIEW_TILES_WIDE)
+					if ((camera.newXMin <= 0) || (camera.xMax >= (world.tilesWide - 1)))
 					{
-						if (heroX < Camera.CENTER_TILE_X)
-						{
-							hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else if (newHeroX > ((world.tilesWide - Camera.VIEW_TILES_WIDE) + Camera.CENTER_TILE_X))
-						{
-							hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
-						else
-						{
-							board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-						}
+						// Camera is on the border, just move the hero
+						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					else
 					{
-						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
+						board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 			}

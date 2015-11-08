@@ -34,11 +34,11 @@ public class Camera
 	}
 	public int xMax
 	{
-		get { return Math.Max(Math.Min(focusX + VIEW_TILES_WIDE - CENTER_TILE_X, world.tilesWide - 1), Math.Min(VIEW_TILES_WIDE - 1, world.tilesWide)); }
+		get { return Math.Max(Math.Min(focusX + VIEW_TILES_WIDE - CENTER_TILE_X - 1, world.tilesWide - 1), Math.Min(VIEW_TILES_WIDE - 1, world.tilesWide)); }
 	}
 	public int yMax
 	{
-		get { return Math.Max(Math.Min(focusY + VIEW_TILES_HIGH - CENTER_TILE_Y, world.tilesHigh - 1), Math.Min(VIEW_TILES_HIGH - 1, world.tilesHigh)); }
+		get { return Math.Max(Math.Min(focusY + VIEW_TILES_HIGH - CENTER_TILE_Y - 1, world.tilesHigh - 1), Math.Min(VIEW_TILES_HIGH - 1, world.tilesHigh)); }
 	}
 	public int newXMin
 	{
@@ -50,11 +50,11 @@ public class Camera
 	}
 	public int newXMax
 	{
-		get { return Math.Max(Math.Min(newFocusX + VIEW_TILES_WIDE - CENTER_TILE_X, world.tilesWide - 1), Math.Min(VIEW_TILES_WIDE - 1, world.tilesWide)); }
+		get { return Math.Max(Math.Min(newFocusX + VIEW_TILES_WIDE - CENTER_TILE_X - 1, world.tilesWide - 1), Math.Min(VIEW_TILES_WIDE - 1, world.tilesWide)); }
 	}
 	public int newYMax
 	{
-		get { return Math.Max(Math.Min(newFocusY + VIEW_TILES_HIGH - CENTER_TILE_Y, world.tilesHigh - 1), Math.Min(VIEW_TILES_HIGH - 1, world.tilesHigh)); }
+		get { return Math.Max(Math.Min(newFocusY + VIEW_TILES_HIGH - CENTER_TILE_Y - 1, world.tilesHigh - 1), Math.Min(VIEW_TILES_HIGH - 1, world.tilesHigh)); }
 	}
 	
 	/// <summary>
