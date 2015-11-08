@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum Direction
 {
@@ -43,13 +44,11 @@ public class Game : MonoBehaviour
 	public World world;
 	public GameObject board;
 	public GameObject[,,] tiles;
-	public GameObject hero;
-	public CharacterDisplay heroChar;
+	public Character hero;
 
 	// Game Variables
 	public string[] layers;
-	public int heroX;
-	public int heroY;
+	public List<Character> characters;
 	public Camera2D camera2D;
 	public int smallWorldDrawOffsetX;
 	public int smallWorldDrawOffsetY;
@@ -113,18 +112,24 @@ public class Game : MonoBehaviour
 		}
 		turnsTaken = 0;
 
-		hero = new GameObject();
-		heroX = world.spawnX;
-		heroY = world.spawnY;
-		hero.name = "Hero";
-		heroChar = new CharacterDisplay(hero.transform);
-		heroChar.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
-		heroChar.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
-		heroChar.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
-		heroChar.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
-		heroChar.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
-		heroChar.shieldComponent.sprite = charShield[Random.Range(0, charShield.Length)];
-		heroChar.weaponComponent.sprite = charWeapon[Random.Range(0, charWeapon.Length)];
+		characters = new List<Character>();
+
+		hero = new Character(world, world.spawnX, world.spawnY);
+		characters.Add(hero);
+		hero.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
+		hero.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
+		hero.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
+		hero.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
+		hero.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
+		hero.shieldComponent.sprite = charShield[Random.Range(0, charShield.Length)];
+		hero.weaponComponent.sprite = charWeapon[Random.Range(0, charWeapon.Length)];
+
+		for (int i = 0; i < 100; i++)
+		{
+			Character dummy = new Character(world, world.spawnX + (i % 10), world.spawnY + (i / 10));
+			characters.Add(dummy);
+			dummy.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
+		}
 
 		layers = new string[]{
 			"Ground",
@@ -206,23 +211,12 @@ public class Game : MonoBehaviour
 		transitionTimeLeft -= Time.deltaTime;
 		if (transitionTimeLeft <= 0)
 		{
-			switch (transitionDirection)
-			{
-				case Direction.UP:
-					heroY += 1;
-					break;
-				case Direction.DOWN:
-					heroY -= 1;
-					break;
-				case Direction.LEFT:
-					heroX -= 1;
-					break;
-				case Direction.RIGHT:
-					heroX += 1;
-					break;
-			}
 			transitioning = false;
 			transitionDirection = Direction.NONE;
+			foreach (Character character in characters)
+			{
+				character.finishTransition();
+			}
 			camera2D.finishTransition();
 			board.transform.position = new Vector3(0, 0, 0);
 		}
@@ -243,8 +237,8 @@ public class Game : MonoBehaviour
 		{
 			world = new World();
 			turnsTaken = 0;
-			heroX = world.spawnX;
-			heroY = world.spawnY;
+			hero.x = world.spawnX;
+			hero.y = world.spawnY;
 			updateCamera();
 		}
 
@@ -260,8 +254,8 @@ public class Game : MonoBehaviour
 		if (Input.GetKey(KeyCode.W))
 		{
 			// Movement up
-			int newHeroY = Mathf.Min(world.tilesHigh - 1, heroY + 1);
-			if (!world.pathBlocked(heroX, newHeroY) && newHeroY != heroY)
+			int newHeroY = Mathf.Min(world.tilesHigh - 1, hero.y + 1);
+			if (!world.pathBlocked(hero.x, newHeroY) && newHeroY != hero.y)
 			{
 				turnTaken = true;
 				transitioning = true;
@@ -272,8 +266,8 @@ public class Game : MonoBehaviour
 		if (Input.GetKey(KeyCode.S))
 		{
 			// Movement down
-			int newHeroY = Mathf.Max(0, heroY - 1);
-			if (!world.pathBlocked(heroX, newHeroY) && newHeroY != heroY)
+			int newHeroY = Mathf.Max(0, hero.y - 1);
+			if (!world.pathBlocked(hero.x, newHeroY) && newHeroY != hero.y)
 			{
 				turnTaken = true;
 				transitioning = true;
@@ -284,8 +278,8 @@ public class Game : MonoBehaviour
 		if (Input.GetKey(KeyCode.A))
 		{
 			// Movement left
-			int newHeroX = Mathf.Max(0, heroX - 1);
-			if (!world.pathBlocked(newHeroX, heroY) && newHeroX != heroX)
+			int newHeroX = Mathf.Max(0, hero.x - 1);
+			if (!world.pathBlocked(newHeroX, hero.y) && newHeroX != hero.x)
 			{
 				turnTaken = true;
 				transitioning = true;
@@ -296,8 +290,8 @@ public class Game : MonoBehaviour
 		if (Input.GetKey(KeyCode.D))
 		{
 			// Movement right
-			int newHeroX = Mathf.Min(world.tilesWide - 1, heroX + 1);
-			if (!world.pathBlocked(newHeroX, heroY) && newHeroX != heroX)
+			int newHeroX = Mathf.Min(world.tilesWide - 1, hero.x + 1);
+			if (!world.pathBlocked(newHeroX, hero.y) && newHeroX != hero.x)
 			{
 				turnTaken = true;
 				transitioning = true;
@@ -307,13 +301,13 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
-			heroChar.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
-			heroChar.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
-			heroChar.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
-			heroChar.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
-			heroChar.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
-			heroChar.shieldComponent.sprite = (Random.Range(0, 2) == 1 ? charShield[Random.Range(0, charShield.Length)] : null);
-			heroChar.weaponComponent.sprite = (Random.Range(0, 2) == 1 ? charWeapon[Random.Range(0, charWeapon.Length)] : null);
+			hero.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
+			hero.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
+			hero.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
+			hero.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
+			hero.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
+			hero.shieldComponent.sprite = (Random.Range(0, 2) == 1 ? charShield[Random.Range(0, charShield.Length)] : null);
+			hero.weaponComponent.sprite = (Random.Range(0, 2) == 1 ? charWeapon[Random.Range(0, charWeapon.Length)] : null);
 		}
 		if (turnTaken)
 		{
@@ -322,6 +316,21 @@ public class Game : MonoBehaviour
 		if (transitioning)
 		{
 			camera2D.transitioning(transitionDirection);
+			switch (transitionDirection)
+			{
+				case Direction.UP:
+					hero.newY = hero.y + 1;
+					break;
+				case Direction.DOWN:
+					hero.newY = hero.y - 1;
+					break;
+				case Direction.LEFT:
+					hero.newX = hero.x - 1;
+					break;
+				case Direction.RIGHT:
+					hero.newX = hero.x + 1;
+					break;
+			}
 		}
 	}
 
@@ -332,53 +341,55 @@ public class Game : MonoBehaviour
 	{
 		if (!transitioning)
 		{
-			hero.transform.position = new Vector3(16 * (camera2D.focusX + smallWorldDrawOffsetX - camera2D.xMin), 16 * (camera2D.focusY + smallWorldDrawOffsetY - camera2D.yMin), 0);
+			foreach (Character character in characters)
+			{
+				if (character.visible)
+				{
+					character.container.transform.position = new Vector3(16 * (character.x + smallWorldDrawOffsetX - camera2D.xMin), 16 * (character.y + smallWorldDrawOffsetY - camera2D.yMin), 0);
+				}
+			}
 		}
 		else
 		{
+			int cameraDiffX = camera2D.newXMin - camera2D.xMin;
+			int cameraDiffY = camera2D.newYMin - camera2D.yMin;
+			foreach (Character character in characters)
+			{
+				if (character.visible)
+				{
+					int diffX = character.newX - character.x - cameraDiffX;
+					int diffY = character.newY - character.y - cameraDiffY;
+					character.container.transform.position += (Vector3.right * Time.deltaTime) * diffX * 16 * (1f / MOVING_TRANSITION_TIME);
+					character.container.transform.position += (Vector3.up * Time.deltaTime) * diffY * 16 * (1f / MOVING_TRANSITION_TIME);
+				}
+			}
 			switch (transitionDirection)
 			{
 				case Direction.UP:
-					if ((camera2D.newYMin <= 0) || (camera2D.yMax >= (world.tilesHigh - 1)))
+					if (!((camera2D.newYMin <= 0) || (camera2D.yMax >= (world.tilesHigh - 1))))
 					{
-						// Camera is on the border, just move the hero
-						hero.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
+						// Camera is not on the border
 						board.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 				case Direction.DOWN:
-					if ((camera2D.yMin <= 0) || (camera2D.newYMax >= (world.tilesHigh - 1)))
+					if (!((camera2D.yMin <= 0) || (camera2D.newYMax >= (world.tilesHigh - 1))))
 					{
-						// Camera is on the border, just move the hero
-						hero.transform.position += (Vector3.down * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
+						// Camera is not on the border
 						board.transform.position += (Vector3.up * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 				case Direction.LEFT:
-					if ((camera2D.xMin <= 0) || (camera2D.newXMax >= (world.tilesWide - 1)))
+					if (!((camera2D.xMin <= 0) || (camera2D.newXMax >= (world.tilesWide - 1))))
 					{
-						// Camera is on the border, just move the hero
-						hero.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
+						// Camera is not on the border
 						board.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;
 				case Direction.RIGHT:
-					if ((camera2D.newXMin <= 0) || (camera2D.xMax >= (world.tilesWide - 1)))
+					if (!((camera2D.newXMin <= 0) || (camera2D.xMax >= (world.tilesWide - 1))))
 					{
-						// Camera is on the border, just move the hero
-						hero.transform.position += (Vector3.right * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
-					}
-					else
-					{
+						// Camera is not on the border
 						board.transform.position += (Vector3.left * Time.deltaTime) * 16 * (1f / MOVING_TRANSITION_TIME);
 					}
 					break;

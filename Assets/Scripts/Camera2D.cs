@@ -20,8 +20,8 @@ public class Camera2D
 	public int focusY;
 
 	// The new camera focus (hero position) after transitioning
-	private int newFocusX;
-	private int newFocusY;
+	public int newFocusX;
+	public int newFocusY;
 
 	// Getters and setters for the various coordinates
 	public int xMin
@@ -66,8 +66,8 @@ public class Camera2D
 	public Camera2D(World world, int x, int y)
 	{
 		this.world = world;
-		this.focusX = x;
-		this.focusY = y;
+		this.focusX = this.newFocusX = x;
+		this.focusY = this.newFocusY = y;
 	}
 
 	/// <summary>
