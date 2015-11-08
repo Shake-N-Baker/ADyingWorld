@@ -31,15 +31,6 @@ public class Game : MonoBehaviour
 	public Sprite[] tileDecorationOverhead;
 	public Sprite[][] tileLayer;
 
-	// Character Sprite Sheets
-	public Sprite[] charBase;
-	public Sprite[] charHair;
-	public Sprite[] charHead;
-	public Sprite[] charLegs;
-	public Sprite[] charShield;
-	public Sprite[] charTorso;
-	public Sprite[] charWeapon;
-
 	// Game Objects
 	public World world;
 	public GameObject board;
@@ -84,13 +75,13 @@ public class Game : MonoBehaviour
 		tileLayer[4] = tileWallTableDecoration;
 		tileLayer[5] = tileRoof;
 		tileLayer[6] = tileDecorationOverhead;
-		charBase = Resources.LoadAll<Sprite>("charBase");
-		charHair = Resources.LoadAll<Sprite>("charHair");
-		charHead = Resources.LoadAll<Sprite>("charHead");
-		charLegs = Resources.LoadAll<Sprite>("charLegs");
-		charShield = Resources.LoadAll<Sprite>("charShield");
-		charTorso = Resources.LoadAll<Sprite>("charTorso");
-		charWeapon = Resources.LoadAll<Sprite>("charWeapon");
+		Character.charBase = Resources.LoadAll<Sprite>("charBase");
+		Character.charHair = Resources.LoadAll<Sprite>("charHair");
+		Character.charHead = Resources.LoadAll<Sprite>("charHead");
+		Character.charLegs = Resources.LoadAll<Sprite>("charLegs");
+		Character.charShield = Resources.LoadAll<Sprite>("charShield");
+		Character.charTorso = Resources.LoadAll<Sprite>("charTorso");
+		Character.charWeapon = Resources.LoadAll<Sprite>("charWeapon");
 	}
 
 	/// <summary>
@@ -116,19 +107,20 @@ public class Game : MonoBehaviour
 
 		hero = new Character(world, world.spawnX, world.spawnY);
 		characters.Add(hero);
-		hero.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
-		hero.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
-		hero.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
-		hero.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
-		hero.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
-		hero.shieldComponent.sprite = charShield[Random.Range(0, charShield.Length)];
-		hero.weaponComponent.sprite = charWeapon[Random.Range(0, charWeapon.Length)];
+		hero.visible = true;
+		hero.baseComponent.sprite = Character.charBase[Random.Range(0, Character.charBase.Length)];
+		hero.hairComponent.sprite = Character.charHair[Random.Range(0, Character.charHair.Length)];
+		hero.legsComponent.sprite = Character.charLegs[Random.Range(0, Character.charLegs.Length)];
+		hero.torsoComponent.sprite = Character.charTorso[Random.Range(0, Character.charTorso.Length)];
+		hero.headComponent.sprite = Character.charHead[Random.Range(0, Character.charHead.Length)];
+		hero.shieldComponent.sprite = Character.charShield[Random.Range(0, Character.charShield.Length)];
+		hero.weaponComponent.sprite = Character.charWeapon[Random.Range(0, Character.charWeapon.Length)];
 
 		for (int i = 0; i < 100; i++)
 		{
 			Character dummy = new Character(world, world.spawnX + (i % 10), world.spawnY + (i / 10));
 			characters.Add(dummy);
-			dummy.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
+			dummy.baseType = Random.Range(0, Character.charBase.Length);
 		}
 
 		layers = new string[]{
@@ -170,6 +162,7 @@ public class Game : MonoBehaviour
 			}
 		}
 
+		updateCharactersVisibility();
 		updateCamera();
 	}
 
@@ -237,8 +230,11 @@ public class Game : MonoBehaviour
 		{
 			world = new World();
 			turnsTaken = 0;
-			hero.x = world.spawnX;
-			hero.y = world.spawnY;
+			hero.x = hero.newX = world.spawnX;
+			hero.y = hero.newY = world.spawnY;
+			camera2D.focusX = camera2D.newFocusX = world.spawnX;
+			camera2D.focusY = camera2D.newFocusY = world.spawnY;
+			updateCharactersVisibility();
 			updateCamera();
 		}
 
@@ -301,13 +297,13 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
-			hero.baseComponent.sprite = charBase[Random.Range(0, charBase.Length)];
-			hero.hairComponent.sprite = charHair[Random.Range(0, charHair.Length)];
-			hero.legsComponent.sprite = charLegs[Random.Range(0, charLegs.Length)];
-			hero.torsoComponent.sprite = charTorso[Random.Range(0, charTorso.Length)];
-			hero.headComponent.sprite = charHead[Random.Range(0, charHead.Length)];
-			hero.shieldComponent.sprite = (Random.Range(0, 2) == 1 ? charShield[Random.Range(0, charShield.Length)] : null);
-			hero.weaponComponent.sprite = (Random.Range(0, 2) == 1 ? charWeapon[Random.Range(0, charWeapon.Length)] : null);
+			hero.baseComponent.sprite = Character.charBase[Random.Range(0, Character.charBase.Length)];
+			hero.hairComponent.sprite = Character.charHair[Random.Range(0, Character.charHair.Length)];
+			hero.legsComponent.sprite = Character.charLegs[Random.Range(0, Character.charLegs.Length)];
+			hero.torsoComponent.sprite = Character.charTorso[Random.Range(0, Character.charTorso.Length)];
+			hero.headComponent.sprite = Character.charHead[Random.Range(0, Character.charHead.Length)];
+			hero.shieldComponent.sprite = (Random.Range(0, 2) == 1 ? Character.charShield[Random.Range(0, Character.charShield.Length)] : null);
+			hero.weaponComponent.sprite = (Random.Range(0, 2) == 1 ? Character.charWeapon[Random.Range(0, Character.charWeapon.Length)] : null);
 		}
 		if (turnTaken)
 		{
@@ -331,11 +327,36 @@ public class Game : MonoBehaviour
 					hero.newX = hero.x + 1;
 					break;
 			}
+			updateCharactersVisibility();
 		}
 	}
 
 	/// <summary>
-	/// Updates the board and hero positions on the screen.
+	/// Updates the characters display visibility.
+	/// </summary>
+	private void updateCharactersVisibility()
+	{
+		foreach (Character character in characters)
+		{
+			if (((camera2D.xMin <= character.x) && (character.x <= camera2D.xMax)) && ((camera2D.yMin <= character.y) && (character.y <= camera2D.yMax)))
+			{
+				character.visible = true;
+				character.container.transform.position = new Vector3(16 * (character.x + smallWorldDrawOffsetX - camera2D.xMin), 16 * (character.y + smallWorldDrawOffsetY - camera2D.yMin), 0);
+			}
+			else if (((camera2D.newXMin <= character.newX) && (character.newX <= camera2D.newXMax)) && ((camera2D.newYMin <= character.newY) && (character.newY <= camera2D.newYMax)))
+			{
+				character.visible = true;
+				character.container.transform.position = new Vector3(16 * (character.x + smallWorldDrawOffsetX - camera2D.xMin), 16 * (character.y + smallWorldDrawOffsetY - camera2D.yMin), 0);
+			}
+			else
+			{
+				character.visible = false;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Updates the board and character positions on the screen.
 	/// </summary>
 	private void updateCamera()
 	{
@@ -448,5 +469,14 @@ public class Game : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	/// <summary>
+	/// Removes the object passed in.
+	/// </summary>
+	/// <param name="obj">Object to be removed.</param>
+	public static void RemoveObject(Object obj)
+	{
+		Destroy(obj);
 	}
 }

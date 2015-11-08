@@ -7,6 +7,15 @@ using System;
 /// </summary>
 public class Character
 {
+	// Character Sprite Sheets
+	public static Sprite[] charBase;
+	public static Sprite[] charHair;
+	public static Sprite[] charHead;
+	public static Sprite[] charLegs;
+	public static Sprite[] charShield;
+	public static Sprite[] charTorso;
+	public static Sprite[] charWeapon;
+
 	// Display Components
 	public GameObject container;
 	public SpriteRenderer baseComponent;
@@ -16,16 +25,107 @@ public class Character
 	public SpriteRenderer headComponent;
 	public SpriteRenderer shieldComponent;
 	public SpriteRenderer weaponComponent;
-	public bool visible;
+	private bool _visible;
+	public bool visible
+	{
+		get
+		{
+			return _visible;
+		}
+		set
+		{
+			if (value)
+			{
+				if (!_visible)
+				{
+					_visible = true;
+					container = new GameObject();
+					container.name = "CharContainer";
+					GameObject charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharWeapon";
+					charComponent.transform.parent = container.transform;
+					weaponComponent = charComponent.GetComponent<SpriteRenderer>();
+					charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharShield";
+					charComponent.transform.parent = container.transform;
+					shieldComponent = charComponent.GetComponent<SpriteRenderer>();
+					charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharHead";
+					charComponent.transform.parent = container.transform;
+					headComponent = charComponent.GetComponent<SpriteRenderer>();
+					charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharTorso";
+					charComponent.transform.parent = container.transform;
+					torsoComponent = charComponent.GetComponent<SpriteRenderer>();
+					charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharLegs";
+					charComponent.transform.parent = container.transform;
+					legsComponent = charComponent.GetComponent<SpriteRenderer>();
+					charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharHair";
+					charComponent.transform.parent = container.transform;
+					hairComponent = charComponent.GetComponent<SpriteRenderer>();
+					charComponent = new GameObject();
+					charComponent.AddComponent<SpriteRenderer>();
+					charComponent.GetComponent<SpriteRenderer>().sprite = null;
+					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent.transform.position = new Vector3(0, 16, 0);
+					charComponent.name = "CharBase";
+					charComponent.transform.parent = container.transform;
+					baseComponent = charComponent.GetComponent<SpriteRenderer>();
+					if (baseType != -1)
+					{
+						baseComponent.sprite = charBase[baseType];
+					}
+					else
+					{
+						baseComponent.sprite = null;
+					}
+				}
+			}
+			else
+			{
+				if (_visible)
+				{
+					_visible = false;
+					Game.RemoveObject(container);
+				}
+			}
+		}
+	}
 
 	// Data Components
-	private int baseType;
-	private int hairType;
-	private int legsType;
-	private int torsoType;
-	private int headType;
-	private int shieldType;
-	private int weaponType;
+	public int baseType;
+	public int hairType;
+	public int legsType;
+	public int torsoType;
+	public int headType;
+	public int shieldType;
+	public int weaponType;
 
 	// World coordinates
 	public World world;
@@ -54,54 +154,53 @@ public class Character
 		headType = -1;
 		shieldType = -1;
 		weaponType = -1;
-		display();
 	}
 
 	/// <summary>
 	/// Update the character to the specified parameters, or does not change if -2 is used.
 	/// </summary>
-	/// <param name="baseComponent">Base component to change to or -2.</param>
-	/// <param name="hairComponent">Hair component to change to or -2.</param>
-	/// <param name="legsComponent">Legs component to change to or -2.</param>
-	/// <param name="torsoComponent">Torso component to change to or -2.</param>
-	/// <param name="headComponent">Head component to change to or -2.</param>
-	/// <param name="shieldComponent">Shield component to change to or -2.</param>
-	/// <param name="weaponComponent">Weapon component to change to or -2.</param>
-	public void Update(int baseComponent = -2,
-	                   int hairComponent = -2,
-	                   int legsComponent = -2,
-	                   int torsoComponent = -2,
-	                   int headComponent = -2,
-	                   int shieldComponent = -2,
-	                   int weaponComponent = -2)
+	/// <param name="baseType">Base type to change to or -2.</param>
+	/// <param name="hairType">Hair type to change to or -2.</param>
+	/// <param name="legsType">Legs type to change to or -2.</param>
+	/// <param name="torsoType">Torso type to change to or -2.</param>
+	/// <param name="headType">Head type to change to or -2.</param>
+	/// <param name="shieldType">Shield type to change to or -2.</param>
+	/// <param name="weaponType">Weapon type to change to or -2.</param>
+	public void Update(int baseType = -2,
+	                   int hairType = -2,
+	                   int legsType = -2,
+	                   int torsoType = -2,
+	                   int headType = -2,
+	                   int shieldType = -2,
+	                   int weaponType = -2)
 	{
-		if (baseComponent != -2)
+		if (baseType != -2)
 		{
-			this.baseType = baseComponent;
+			this.baseType = baseType;
 		}
-		if (hairComponent != -2)
+		if (hairType != -2)
 		{
-			this.hairType = hairComponent;
+			this.hairType = hairType;
 		}
-		if (legsComponent != -2)
+		if (legsType != -2)
 		{
-			this.legsType = legsComponent;
+			this.legsType = legsType;
 		}
-		if (torsoComponent != -2)
+		if (torsoType != -2)
 		{
-			this.torsoType = torsoComponent;
+			this.torsoType = torsoType;
 		}
-		if (headComponent != -2)
+		if (headType != -2)
 		{
-			this.headType = headComponent;
+			this.headType = headType;
 		}
-		if (shieldComponent != -2)
+		if (shieldType != -2)
 		{
-			this.shieldType = shieldComponent;
+			this.shieldType = shieldType;
 		}
-		if (weaponComponent != -2)
+		if (weaponType != -2)
 		{
-			this.weaponType = weaponComponent;
+			this.weaponType = weaponType;
 		}
 	}
 
@@ -113,68 +212,5 @@ public class Character
 	{
 		this.x = this.newX;
 		this.y = this.newY;
-	}
-
-	private void display()
-	{
-		visible = true;
-		container = new GameObject();
-		container.name = "CharContainer";
-		GameObject charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharWeapon";
-		charComponent.transform.parent = container.transform;
-		weaponComponent = charComponent.GetComponent<SpriteRenderer>();
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharShield";
-		charComponent.transform.parent = container.transform;
-		shieldComponent = charComponent.GetComponent<SpriteRenderer>();
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharHead";
-		charComponent.transform.parent = container.transform;
-		headComponent = charComponent.GetComponent<SpriteRenderer>();
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharTorso";
-		charComponent.transform.parent = container.transform;
-		torsoComponent = charComponent.GetComponent<SpriteRenderer>();
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharLegs";
-		charComponent.transform.parent = container.transform;
-		legsComponent = charComponent.GetComponent<SpriteRenderer>();
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharHair";
-		charComponent.transform.parent = container.transform;
-		hairComponent = charComponent.GetComponent<SpriteRenderer>();
-		charComponent = new GameObject();
-		charComponent.AddComponent<SpriteRenderer>();
-		charComponent.GetComponent<SpriteRenderer>().sprite = null;
-		charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
-		charComponent.transform.position = new Vector3(0, 16, 0);
-		charComponent.name = "CharBase";
-		charComponent.transform.parent = container.transform;
-		baseComponent = charComponent.GetComponent<SpriteRenderer>();
 	}
 }
