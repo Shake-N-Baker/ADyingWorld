@@ -107,20 +107,20 @@ public class Game : MonoBehaviour
 
 		hero = new Character(world, world.spawnX, world.spawnY);
 		characters.Add(hero);
-		hero.visible = true;
-		hero.baseComponent.sprite = Character.charBase[Random.Range(0, Character.charBase.Length)];
-		hero.hairComponent.sprite = Character.charHair[Random.Range(0, Character.charHair.Length)];
-		hero.legsComponent.sprite = Character.charLegs[Random.Range(0, Character.charLegs.Length)];
-		hero.torsoComponent.sprite = Character.charTorso[Random.Range(0, Character.charTorso.Length)];
-		hero.headComponent.sprite = Character.charHead[Random.Range(0, Character.charHead.Length)];
-		hero.shieldComponent.sprite = Character.charShield[Random.Range(0, Character.charShield.Length)];
-		hero.weaponComponent.sprite = Character.charWeapon[Random.Range(0, Character.charWeapon.Length)];
+		hero.baseType = Random.Range(0, Character.charBase.Length);
+		hero.hairType = Random.Range(0, Character.charHair.Length);
+		hero.legsType = Random.Range(0, Character.charLegs.Length);
+		hero.torsoType = Random.Range(0, Character.charTorso.Length);
+		hero.headType = Random.Range(0, Character.charHead.Length);
+		hero.shieldType = Random.Range(0, Character.charShield.Length);
+		hero.weaponType = Random.Range(0, Character.charWeapon.Length);
 
 		for (int i = 0; i < 100; i++)
 		{
 			Character dummy = new Character(world, world.spawnX + (i % 10), world.spawnY + (i / 10));
 			characters.Add(dummy);
 			dummy.baseType = Random.Range(0, Character.charBase.Length);
+			dummy.hairType = Random.Range(0, Character.charHair.Length);
 		}
 
 		layers = new string[]{
@@ -297,13 +297,13 @@ public class Game : MonoBehaviour
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
-			hero.baseComponent.sprite = Character.charBase[Random.Range(0, Character.charBase.Length)];
-			hero.hairComponent.sprite = Character.charHair[Random.Range(0, Character.charHair.Length)];
-			hero.legsComponent.sprite = Character.charLegs[Random.Range(0, Character.charLegs.Length)];
-			hero.torsoComponent.sprite = Character.charTorso[Random.Range(0, Character.charTorso.Length)];
-			hero.headComponent.sprite = Character.charHead[Random.Range(0, Character.charHead.Length)];
-			hero.shieldComponent.sprite = (Random.Range(0, 2) == 1 ? Character.charShield[Random.Range(0, Character.charShield.Length)] : null);
-			hero.weaponComponent.sprite = (Random.Range(0, 2) == 1 ? Character.charWeapon[Random.Range(0, Character.charWeapon.Length)] : null);
+			hero.baseType = Random.Range(0, Character.charBase.Length);
+			hero.hairType = Random.Range(0, Character.charHair.Length);
+			hero.legsType = Random.Range(0, Character.charLegs.Length);
+			hero.torsoType = Random.Range(0, Character.charTorso.Length);
+			hero.headType = Random.Range(0, Character.charHead.Length);
+			hero.shieldType = (Random.Range(0, 2) == 1 ? Random.Range(0, Character.charShield.Length) : -1);
+			hero.weaponType = (Random.Range(0, 2) == 1 ? Random.Range(0, Character.charWeapon.Length) : -1);
 		}
 		if (turnTaken)
 		{

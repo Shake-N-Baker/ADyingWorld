@@ -18,13 +18,13 @@ public class Character
 
 	// Display Components
 	public GameObject container;
-	public SpriteRenderer baseComponent;
-	public SpriteRenderer hairComponent;
-	public SpriteRenderer legsComponent;
-	public SpriteRenderer torsoComponent;
-	public SpriteRenderer headComponent;
-	public SpriteRenderer shieldComponent;
-	public SpriteRenderer weaponComponent;
+	private SpriteRenderer baseComponent;
+	private SpriteRenderer hairComponent;
+	private SpriteRenderer legsComponent;
+	private SpriteRenderer torsoComponent;
+	private SpriteRenderer headComponent;
+	private SpriteRenderer shieldComponent;
+	private SpriteRenderer weaponComponent;
 	private bool _visible;
 	public bool visible
 	{
@@ -39,71 +39,97 @@ public class Character
 				if (!_visible)
 				{
 					_visible = true;
-					container = new GameObject();
-					container.name = "CharContainer";
-					GameObject charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					container = new GameObject("CharContainer");
+					GameObject charComponent = new GameObject("CharWeapon");
+					weaponComponent = charComponent.AddComponent<SpriteRenderer>();
+					weaponComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharWeapon";
 					charComponent.transform.parent = container.transform;
-					weaponComponent = charComponent.GetComponent<SpriteRenderer>();
-					charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent = new GameObject("CharShield");
+					shieldComponent = charComponent.AddComponent<SpriteRenderer>();
+					shieldComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharShield";
 					charComponent.transform.parent = container.transform;
-					shieldComponent = charComponent.GetComponent<SpriteRenderer>();
-					charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent = new GameObject("CharHead");
+					headComponent = charComponent.AddComponent<SpriteRenderer>();
+					headComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharHead";
 					charComponent.transform.parent = container.transform;
-					headComponent = charComponent.GetComponent<SpriteRenderer>();
-					charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent = new GameObject("CharTorso");
+					torsoComponent = charComponent.AddComponent<SpriteRenderer>();
+					torsoComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharTorso";
 					charComponent.transform.parent = container.transform;
-					torsoComponent = charComponent.GetComponent<SpriteRenderer>();
-					charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent = new GameObject("CharLegs");
+					legsComponent = charComponent.AddComponent<SpriteRenderer>();
+					legsComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharLegs";
 					charComponent.transform.parent = container.transform;
-					legsComponent = charComponent.GetComponent<SpriteRenderer>();
-					charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent = new GameObject("CharHair");
+					hairComponent = charComponent.AddComponent<SpriteRenderer>();
+					hairComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharHair";
 					charComponent.transform.parent = container.transform;
-					hairComponent = charComponent.GetComponent<SpriteRenderer>();
-					charComponent = new GameObject();
-					charComponent.AddComponent<SpriteRenderer>();
-					charComponent.GetComponent<SpriteRenderer>().sprite = null;
-					charComponent.GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+					charComponent = new GameObject("CharBase");
+					baseComponent = charComponent.AddComponent<SpriteRenderer>();
+					baseComponent.sortingLayerName = "Characters";
 					charComponent.transform.position = new Vector3(0, 16, 0);
-					charComponent.name = "CharBase";
 					charComponent.transform.parent = container.transform;
-					baseComponent = charComponent.GetComponent<SpriteRenderer>();
-					if (baseType != -1)
+					if (_baseType != -1)
 					{
-						baseComponent.sprite = charBase[baseType];
+						baseComponent.sprite = charBase[_baseType];
 					}
 					else
 					{
 						baseComponent.sprite = null;
+					}
+					if (_hairType != -1)
+					{
+						hairComponent.sprite = charHair[_hairType];
+					}
+					else
+					{
+						hairComponent.sprite = null;
+					}
+					if (_legsType != -1)
+					{
+						legsComponent.sprite = charLegs[_legsType];
+					}
+					else
+					{
+						legsComponent.sprite = null;
+					}
+					if (_torsoType != -1)
+					{
+						torsoComponent.sprite = charTorso[_torsoType];
+					}
+					else
+					{
+						torsoComponent.sprite = null;
+					}
+					if (_headType != -1)
+					{
+						headComponent.sprite = charHead[_headType];
+					}
+					else
+					{
+						headComponent.sprite = null;
+					}
+					if (_shieldType != -1)
+					{
+						shieldComponent.sprite = charShield[_shieldType];
+					}
+					else
+					{
+						shieldComponent.sprite = null;
+					}
+					if (_weaponType != -1)
+					{
+						weaponComponent.sprite = charWeapon[_weaponType];
+					}
+					else
+					{
+						weaponComponent.sprite = null;
 					}
 				}
 			}
@@ -119,13 +145,146 @@ public class Character
 	}
 
 	// Data Components
-	public int baseType;
-	public int hairType;
-	public int legsType;
-	public int torsoType;
-	public int headType;
-	public int shieldType;
-	public int weaponType;
+	private int _baseType;
+	private int _hairType;
+	private int _legsType;
+	private int _torsoType;
+	private int _headType;
+	private int _shieldType;
+	private int _weaponType;
+	public int baseType
+	{
+		get { return _baseType; }
+		set
+		{
+			_baseType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					baseComponent.sprite = null;
+				}
+				else
+				{
+					baseComponent.sprite = charBase[_baseType];
+				}
+			}
+		}
+	}
+	public int hairType
+	{
+		get { return _hairType; }
+		set
+		{
+			_hairType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					hairComponent.sprite = null;
+				}
+				else
+				{
+					hairComponent.sprite = charHair[_hairType];
+				}
+			}
+		}
+	}
+	public int legsType
+	{
+		get { return _legsType; }
+		set
+		{
+			_legsType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					legsComponent.sprite = null;
+				}
+				else
+				{
+					legsComponent.sprite = charLegs[_legsType];
+				}
+			}
+		}
+	}
+	public int torsoType
+	{
+		get { return _torsoType; }
+		set
+		{
+			_torsoType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					torsoComponent.sprite = null;
+				}
+				else
+				{
+					torsoComponent.sprite = charTorso[_torsoType];
+				}
+			}
+		}
+	}
+	public int headType
+	{
+		get { return _headType; }
+		set
+		{
+			_headType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					headComponent.sprite = null;
+				}
+				else
+				{
+					headComponent.sprite = charHead[_headType];
+				}
+			}
+		}
+	}
+	public int shieldType
+	{
+		get { return _shieldType; }
+		set
+		{
+			_shieldType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					shieldComponent.sprite = null;
+				}
+				else
+				{
+					shieldComponent.sprite = charShield[_shieldType];
+				}
+			}
+		}
+	}
+	public int weaponType
+	{
+		get { return _weaponType; }
+		set
+		{
+			_weaponType = value;
+			if (_visible)
+			{
+				if (value == -1)
+				{
+					weaponComponent.sprite = null;
+				}
+				else
+				{
+					weaponComponent.sprite = charWeapon[_weaponType];
+				}
+			}
+		}
+	}
 
 	// World coordinates
 	public World world;
@@ -147,13 +306,13 @@ public class Character
 		this.world = world;
 		this.x = this.newX = x;
 		this.y = this.newY = y;
-		baseType = -1;
-		hairType = -1;
-		legsType = -1;
-		torsoType = -1;
-		headType = -1;
-		shieldType = -1;
-		weaponType = -1;
+		_baseType = -1;
+		_hairType = -1;
+		_legsType = -1;
+		_torsoType = -1;
+		_headType = -1;
+		_shieldType = -1;
+		_weaponType = -1;
 	}
 
 	/// <summary>
