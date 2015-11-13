@@ -21,6 +21,9 @@ public class Zone
 	public int tilesHigh;
 	private Tile[] zoneTiles;
 
+	// Static variable to generate random numbers
+	private static Random rand;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Zone"/> class.
 	/// </summary>
@@ -32,6 +35,10 @@ public class Zone
 	/// <param name="zoneHeight">Zone height.</param>
 	public Zone(string name, World world, int offsetX, int offsetY, int zoneWidth, int zoneHeight)
 	{
+		if (rand == null)
+		{
+			rand = new Random();
+		}
 		this.name = name;
 		this.world = world;
 		this.offsetX = offsetX;
@@ -85,13 +92,12 @@ public class Zone
 	/// <param name="topBorder">Whether this zone is on the top border.</param>
 	private void buildTown(bool leftBorder, bool rightBorder, bool bottomBorder, bool topBorder)
 	{
-		Random rand = new Random();
 		int r;
 		for (int y = 0; y < this.tilesHigh; y++)
 		{
 			for (int x = 0; x < this.tilesWide; x++)
 			{
-				zoneTiles[convertIndex(x, y)].ground = 80;
+				placeGrass(x, y);
 			}
 		}
 		int topLeftX = -1, topLeftY = -1, topRightX = -1, topRightY = -1, botLeftX = -1, botLeftY = -1, botRightX = -1, botRightY = -1;
@@ -431,7 +437,6 @@ public class Zone
 	/// <param name="topBorder">Whether this zone is on the top border.</param>
 	private void buildForest(bool leftBorder, bool rightBorder, bool bottomBorder, bool topBorder)
 	{
-		Random rand = new Random();
 		int r;
 		for (int y = 0; y < this.tilesHigh; y++)
 		{
@@ -459,32 +464,106 @@ public class Zone
 				}
 				else
 				{
-					r = rand.Next(0, 100) + 1;
-					if (r < 45)
+					placeGrass(x, y);
+					if (zoneTiles[convertIndex(x, y)].isEmpty)
 					{
-						zoneTiles[convertIndex(x, y)].ground = 80;
-					}
-					else if (r < 99)
-					{
-						zoneTiles[convertIndex(x, y)].ground = 81;
-					}
-					else
-					{
-						zoneTiles[convertIndex(x, y)].ground = 82;
-					}
-					r = rand.Next(0, 100) + 1;
-					if (r <= 18 && y < this.tilesHigh - 1)
-					{
-						if (zoneTiles[convertIndex(x, y)].isEmpty)
+						r = rand.Next(0, 100);
+						if (r < 16 && y < this.tilesHigh - 1)
 						{
-							zoneTiles[convertIndex(x, y)].decorationBase = 15;
-							zoneTiles[convertIndex(x, y)].pathingBlocked = true;
-							zoneTiles[convertIndex(x, y + 1)].decorationOverhead = 45;
+							placeTree(x, y);
+						}
+						else if (r < 18)
+						{
+							placeForestShrubs(x, y);
+						}
+						else if (r < 23)
+						{
+							placeForestFoliage(x, y);
 						}
 					}
 				}
 			}
 		}
+	}
+
+	/// <summary>
+	/// Places a random grass tile at the given coordinates.
+	/// </summary>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	private void placeGrass(int x, int y)
+	{
+		int[] grass = new int[2]{80, 81};
+		int[] weights = new int[2]{50, 50};
+		int index = randomIndex(weights);
+		zoneTiles[convertIndex(x, y)].ground = grass[index];
+	}
+
+	/// <summary>
+	/// Places a random tree at the given coordinates.
+	/// </summary>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	private void placeTree(int x, int y)
+	{
+		int[] tree = new int[7]{15, 17, 21, 16, 18, 20, 19};
+		int[] weights = new int[7]{38, 26, 7, 4, 15, 9, 1};
+		int index = randomIndex(weights);
+		zoneTiles[convertIndex(x, y)].decorationBase = tree[index];
+		zoneTiles[convertIndex(x, y + 1)].decorationOverhead = tree[index] + 30;
+		zoneTiles[convertIndex(x, y)].pathingBlocked = true;
+	}
+
+	/// <summary>
+	/// Places the forest shrubs at the given coordinates.
+	/// </summary>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	private void placeForestShrubs(int x, int y)
+	{
+		int[] shrub = new int[8]{22, 23, 24, 25, 26, 27, 117, 118};
+		int[] weights = new int[8]{40, 6, 22, 8, 8, 8, 4, 4};
+		int index = randomIndex(weights);
+		zoneTiles[convertIndex(x, y)].decorationBase = shrub[index];
+		zoneTiles[convertIndex(x, y)].pathingBlocked = true;
+	}
+
+	/// <summary>
+	/// Places the forest foliage at the given coordinates.
+	/// </summary>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	private void placeForestFoliage(int x, int y)
+	{
+		int[] foliage = new int[6]{32, 33, 37, 38, 39, 40};
+		int[] weights = new int[6]{46, 46, 2, 2, 2, 2};
+		int index = randomIndex(weights);
+		zoneTiles[convertIndex(x, y)].decorationBase = foliage[index];
+	}
+
+	/// <summary>
+	/// Returns a random index given the weights passed in.
+	/// </summary>
+	/// <returns>A weighted random index.</returns>
+	/// <param name="weights">Weights of each index, higher means more probable.</param>
+	private int randomIndex(int[] weights)
+	{
+		int sum = 0, i = 0, roll = 0;
+		for (i = 0; i < weights.Length; i++)
+		{
+			sum += weights[i];
+		}
+		roll = rand.Next(0, sum);
+		sum = 0;
+		for (i = 0; i < weights.Length; i++)
+		{
+			sum += weights[i];
+			if (roll < sum)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	/// <summary>

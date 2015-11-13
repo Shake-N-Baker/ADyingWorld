@@ -119,7 +119,8 @@ public class Tile
 	}
 
 	/// <summary>
-	/// Gets a value indicating whether this <see cref="Tile"/> is empty.
+	/// Gets a value indicating whether this <see cref="Tile"/> is empty of anything but
+	/// ground and over ground tile data.
 	/// </summary>
 	/// <value><c>true</c> if is empty; otherwise, <c>false</c>.</value>
 	public bool isEmpty
