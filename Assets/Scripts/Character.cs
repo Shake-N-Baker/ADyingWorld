@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// The character class holds data for and displays an instance
@@ -285,6 +286,7 @@ public class Character
 			}
 		}
 	}
+	public CharacterBehavior behavior;
 
 	// World coordinates
 	public World world;
@@ -301,7 +303,8 @@ public class Character
 	/// <param name="world">World character currently resides in.</param>
 	/// <param name="x">The tile x position.</param>
 	/// <param name="y">The tile y position.</param>
-	public Character(World world, int x, int y)
+	/// <param name="behavior">The type of behavior controlling this character</param>
+	public Character(World world, int x, int y, BehaviorType behavior = BehaviorType.None)
 	{
 		this.world = world;
 		this.x = this.newX = x;
@@ -313,54 +316,16 @@ public class Character
 		_headType = -1;
 		_shieldType = -1;
 		_weaponType = -1;
+		this.behavior = new CharacterBehavior(this, behavior);
 	}
 
 	/// <summary>
-	/// Update the character to the specified parameters, or does not change if -2 is used.
+	/// Update this character instance based on the world and characters.
 	/// </summary>
-	/// <param name="baseType">Base type to change to or -2.</param>
-	/// <param name="hairType">Hair type to change to or -2.</param>
-	/// <param name="legsType">Legs type to change to or -2.</param>
-	/// <param name="torsoType">Torso type to change to or -2.</param>
-	/// <param name="headType">Head type to change to or -2.</param>
-	/// <param name="shieldType">Shield type to change to or -2.</param>
-	/// <param name="weaponType">Weapon type to change to or -2.</param>
-	public void Update(int baseType = -2,
-	                   int hairType = -2,
-	                   int legsType = -2,
-	                   int torsoType = -2,
-	                   int headType = -2,
-	                   int shieldType = -2,
-	                   int weaponType = -2)
+	/// <param name="characters">The list of characters.</param>
+	public void Update(List<Character> characters)
 	{
-		if (baseType != -2)
-		{
-			this.baseType = baseType;
-		}
-		if (hairType != -2)
-		{
-			this.hairType = hairType;
-		}
-		if (legsType != -2)
-		{
-			this.legsType = legsType;
-		}
-		if (torsoType != -2)
-		{
-			this.torsoType = torsoType;
-		}
-		if (headType != -2)
-		{
-			this.headType = headType;
-		}
-		if (shieldType != -2)
-		{
-			this.shieldType = shieldType;
-		}
-		if (weaponType != -2)
-		{
-			this.weaponType = weaponType;
-		}
+		behavior.Update(characters);
 	}
 
 	/// <summary>

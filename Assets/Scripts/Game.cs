@@ -105,7 +105,7 @@ public class Game : MonoBehaviour
 
 		characters = new List<Character>();
 
-		hero = new Character(world, world.spawnX, world.spawnY);
+		hero = new Character(world, world.spawnX, world.spawnY, BehaviorType.None);
 		characters.Add(hero);
 		hero.baseType = Random.Range(0, Character.charBase.Length);
 		hero.hairType = Random.Range(0, Character.charHair.Length);
@@ -117,7 +117,7 @@ public class Game : MonoBehaviour
 
 		for (int i = 0; i < 100; i++)
 		{
-			Character dummy = new Character(world, world.spawnX + (i % 10), world.spawnY + (i / 10));
+			Character dummy = new Character(world, world.spawnX + (i % 10), world.spawnY + (i / 10), BehaviorType.Villager);
 			characters.Add(dummy);
 			dummy.baseType = Random.Range(0, Character.charBase.Length);
 			dummy.hairType = Random.Range(0, Character.charHair.Length);
@@ -305,10 +305,6 @@ public class Game : MonoBehaviour
 			hero.shieldType = (Random.Range(0, 2) == 1 ? Random.Range(0, Character.charShield.Length) : -1);
 			hero.weaponType = (Random.Range(0, 2) == 1 ? Random.Range(0, Character.charWeapon.Length) : -1);
 		}
-		if (turnTaken)
-		{
-			turnsTaken++;
-		}
 		if (transitioning)
 		{
 			camera2D.transitioning(transitionDirection);
@@ -328,6 +324,14 @@ public class Game : MonoBehaviour
 					break;
 			}
 			updateCharactersVisibility();
+		}
+		if (turnTaken)
+		{
+			foreach (Character character in characters)
+			{
+				character.Update(characters);
+			}
+			turnsTaken++;
 		}
 	}
 
