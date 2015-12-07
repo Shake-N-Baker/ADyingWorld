@@ -38,9 +38,11 @@ public class Game : MonoBehaviour
 	public Sprite uiHeart;
 	public Sprite uiCoin;
 	public Sprite uiSword;
+	public Sprite uiChest;
 	public GameObject hudDarkPanel;
 	public GameObject hudHeart;
 	public GameObject hudCoin;
+	public GameObject hudChest;
 	public GameObject hudHotkeySlotOnePanel;
 	public GameObject hudHotkeySlotTwoPanel;
 	public GameObject hudHotkeySlotThreePanel;
@@ -111,6 +113,7 @@ public class Game : MonoBehaviour
 		uiHeart = Resources.Load<Sprite>("UI/uiHeart");
 		uiCoin = Resources.Load<Sprite>("UI/uiCoins");
 		uiSword = Resources.Load<Sprite>("UI/uiSword");
+		uiChest = Resources.Load<Sprite>("UI/uiChest");
 		customFont = Resources.Load<Font>("KENPIXEL");
 	}
 
@@ -201,6 +204,11 @@ public class Game : MonoBehaviour
 		hudCoin.transform.position = new Vector3(55, 282, 0);
 		hudSprite = hudCoin.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiCoin;
+		hudSprite.sortingLayerName = "UI";
+		hudChest = new GameObject("hudChest");
+		hudChest.transform.position = new Vector3(289, 24, 0);
+		hudSprite = hudChest.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiChest;
 		hudSprite.sortingLayerName = "UI";
 		hudDarkPanel = new GameObject("hudDarkPanel");
 		hudDarkPanel.transform.position = new Vector3(3, 286, 0);
@@ -453,7 +461,6 @@ public class Game : MonoBehaviour
 					hero.newX = hero.x + 1;
 					break;
 			}
-			updateCharactersVisibility();
 		}
 		if (turnTaken)
 		{
@@ -462,6 +469,10 @@ public class Game : MonoBehaviour
 				character.Update(characters);
 			}
 			turnsTaken++;
+		}
+		if (transitioning)
+		{
+			updateCharactersVisibility();
 		}
 	}
 
