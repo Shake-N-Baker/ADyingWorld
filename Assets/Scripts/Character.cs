@@ -8,6 +8,22 @@ using System.Collections.Generic;
 /// </summary>
 public class Character
 {
+	// World coordinates
+	public World world;
+	public int x;
+	public int y;
+	
+	// New coordinates after transitioning
+	public int newX;
+	public int newY;
+
+	// Character stats
+	public int health;
+	public int maxHealth;
+	public int attack;
+	public int defense;
+	public bool friendly;
+
 	// Character Sprite Sheets
 	public static Sprite[] charBase;
 	public static Sprite[] charHair;
@@ -288,15 +304,6 @@ public class Character
 	}
 	public CharacterBehavior behavior;
 
-	// World coordinates
-	public World world;
-	public int x;
-	public int y;
-
-	// New coordinates after transitioning
-	public int newX;
-	public int newY;
-
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Character"/> class.
 	/// </summary>
@@ -317,6 +324,22 @@ public class Character
 		_shieldType = -1;
 		_weaponType = -1;
 		this.behavior = new CharacterBehavior(this, behavior);
+		// Set default stats based on behavior
+		switch (behavior)
+		{
+			case BehaviorType.Villager:
+				this.maxHealth = this.health = 100;
+				this.attack = 5;
+				this.defense = 0;
+				this.friendly = true;
+				break;
+			case BehaviorType.None:
+			default:
+				this.maxHealth = this.health = 1;
+				this.attack = this.defense = 0;
+				this.friendly = true;
+				break;
+		}
 	}
 
 	/// <summary>

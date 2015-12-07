@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -30,6 +31,29 @@ public class Game : MonoBehaviour
 	public Sprite[] tileRoof;
 	public Sprite[] tileDecorationOverhead;
 	public Sprite[][] tileLayer;
+
+	// UI Sprites
+	public Sprite uiDarkPanel;
+	public Sprite uiHotkeyPanel;
+	public Sprite uiHeart;
+	public Sprite uiCoin;
+	public Sprite uiSword;
+	public GameObject hudDarkPanel;
+	public GameObject hudHeart;
+	public GameObject hudCoin;
+	public GameObject hudHotkeySlotOnePanel;
+	public GameObject hudHotkeySlotTwoPanel;
+	public GameObject hudHotkeySlotThreePanel;
+	public GameObject hudHotkeyInventoryPanel;
+
+	// Font and texts
+	public Font customFont;
+	public GameObject healthText;
+	public GameObject goldText;
+	public GameObject hotkeySlotOneText;
+	public GameObject hotkeySlotTwoText;
+	public GameObject hotkeySlotThreeText;
+	public GameObject hotkeyInventoryText;
 
 	// Game Objects
 	public World world;
@@ -82,6 +106,12 @@ public class Game : MonoBehaviour
 		Character.charShield = Resources.LoadAll<Sprite>("charShield");
 		Character.charTorso = Resources.LoadAll<Sprite>("charTorso");
 		Character.charWeapon = Resources.LoadAll<Sprite>("charWeapon");
+		uiDarkPanel = Resources.Load<Sprite>("UI/uiDarkPanel");
+		uiHotkeyPanel = Resources.Load<Sprite>("UI/uiHotkeyPanel");
+		uiHeart = Resources.Load<Sprite>("UI/uiHeart");
+		uiCoin = Resources.Load<Sprite>("UI/uiCoins");
+		uiSword = Resources.Load<Sprite>("UI/uiSword");
+		customFont = Resources.Load<Font>("KENPIXEL");
 	}
 
 	/// <summary>
@@ -107,6 +137,7 @@ public class Game : MonoBehaviour
 
 		hero = new Character(world, world.spawnX, world.spawnY, BehaviorType.None);
 		characters.Add(hero);
+		hero.maxHealth = hero.health = 100;
 		hero.baseType = Random.Range(0, Character.charBase.Length);
 		hero.hairType = Random.Range(0, Character.charHair.Length);
 		hero.legsType = Random.Range(0, Character.charLegs.Length);
@@ -151,16 +182,58 @@ public class Game : MonoBehaviour
 					{
 						continue;
 					}
-					GameObject tile = new GameObject();
+					GameObject tile = new GameObject(layer + "X-" + (x + 1) + "Y-" + (y + 1));
 					tile.AddComponent<SpriteRenderer>();
 					tile.GetComponent<SpriteRenderer>().sortingLayerName = layer;
 					tile.transform.position = new Vector3(x * 16, (y + 1) * 16, 0);
-					tile.name = layer + "X-" + (x + 1) + "Y-" + (y + 1);
 					tile.transform.parent = board.transform;
 					tiles[layerIndex, x + 1, y + 1] = tile;
 				}
 			}
 		}
+
+		hudHeart = new GameObject("hudHeart");
+		hudHeart.transform.position = new Vector3(7, 282, 0);
+		SpriteRenderer hudSprite = hudHeart.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiHeart;
+		hudSprite.sortingLayerName = "UI";
+		hudCoin = new GameObject("hudCoin");
+		hudCoin.transform.position = new Vector3(55, 282, 0);
+		hudSprite = hudCoin.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiCoin;
+		hudSprite.sortingLayerName = "UI";
+		hudDarkPanel = new GameObject("hudDarkPanel");
+		hudDarkPanel.transform.position = new Vector3(3, 286, 0);
+		hudSprite = hudDarkPanel.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiDarkPanel;
+		hudSprite.sortingLayerName = "UI";
+		hudHotkeySlotOnePanel = new GameObject("hudHotkeySlotOnePanel");
+		hudHotkeySlotOnePanel.transform.position = new Vector3(176, 27, 0);
+		hudSprite = hudHotkeySlotOnePanel.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sortingLayerName = "UI";
+		hudHotkeySlotTwoPanel = new GameObject("hudHotkeySlotTwoPanel");
+		hudHotkeySlotTwoPanel.transform.position = new Vector3(212, 27, 0);
+		hudSprite = hudHotkeySlotTwoPanel.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sortingLayerName = "UI";
+		hudHotkeySlotThreePanel = new GameObject("hudHotkeySlotThreePanel");
+		hudHotkeySlotThreePanel.transform.position = new Vector3(248, 27, 0);
+		hudSprite = hudHotkeySlotThreePanel.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sortingLayerName = "UI";
+		hudHotkeyInventoryPanel = new GameObject("hudHotkeyInventoryPanel");
+		hudHotkeyInventoryPanel.transform.position = new Vector3(284, 27, 0);
+		hudSprite = hudHotkeyInventoryPanel.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sortingLayerName = "UI";
+
+		healthText = CreateTextObject("HealthUIText", hero.health.ToString(), 0.5f, 27, 180, 100, 100);
+		goldText = CreateTextObject("GoldUIText", "0", 0.5f, 75, 180, 100, 100);
+		hotkeySlotOneText = CreateTextObject("HotkeyOneUIText", "1", 0.5f, 199, 0, 100, 23);
+		hotkeySlotTwoText = CreateTextObject("HotkeyTwoUIText", "2", 0.5f, 235, 0, 100, 23);
+		hotkeySlotThreeText = CreateTextObject("HotkeyThreeUIText", "3", 0.5f, 271, 0, 100, 23);
+		hotkeyInventoryText = CreateTextObject("hotkeyInventoryText", "E", 0.5f, 307, 0, 100, 23);
 
 		updateCharactersVisibility();
 		updateCamera();
@@ -247,16 +320,29 @@ public class Game : MonoBehaviour
 		{
 			// Confirm
 		}
+		bool blocked;
 		if (Input.GetKey(KeyCode.W))
 		{
 			// Movement up
 			int newHeroY = Mathf.Min(world.tilesHigh - 1, hero.y + 1);
 			if (!world.pathBlocked(hero.x, newHeroY) && newHeroY != hero.y)
 			{
-				turnTaken = true;
-				transitioning = true;
-				transitionDirection = Direction.UP;
-				transitionTimeLeft = MOVING_TRANSITION_TIME;
+				blocked = false;
+				foreach (Character character in characters)
+				{
+					if (character.x == hero.x && character.y == newHeroY)
+					{
+						blocked = true;
+						break;
+					}
+				}
+				if (!blocked)
+				{
+					turnTaken = true;
+					transitioning = true;
+					transitionDirection = Direction.UP;
+					transitionTimeLeft = MOVING_TRANSITION_TIME;
+				}
 			}
 		}
 		if (Input.GetKey(KeyCode.S))
@@ -265,10 +351,22 @@ public class Game : MonoBehaviour
 			int newHeroY = Mathf.Max(0, hero.y - 1);
 			if (!world.pathBlocked(hero.x, newHeroY) && newHeroY != hero.y)
 			{
-				turnTaken = true;
-				transitioning = true;
-				transitionDirection = Direction.DOWN;
-				transitionTimeLeft = MOVING_TRANSITION_TIME;
+				blocked = false;
+				foreach (Character character in characters)
+				{
+					if (character.x == hero.x && character.y == newHeroY)
+					{
+						blocked = true;
+						break;
+					}
+				}
+				if (!blocked)
+				{
+					turnTaken = true;
+					transitioning = true;
+					transitionDirection = Direction.DOWN;
+					transitionTimeLeft = MOVING_TRANSITION_TIME;
+				}
 			}
 		}
 		if (Input.GetKey(KeyCode.A))
@@ -277,10 +375,22 @@ public class Game : MonoBehaviour
 			int newHeroX = Mathf.Max(0, hero.x - 1);
 			if (!world.pathBlocked(newHeroX, hero.y) && newHeroX != hero.x)
 			{
-				turnTaken = true;
-				transitioning = true;
-				transitionDirection = Direction.LEFT;
-				transitionTimeLeft = MOVING_TRANSITION_TIME;
+				blocked = false;
+				foreach (Character character in characters)
+				{
+					if (character.x == newHeroX && character.y == hero.y)
+					{
+						blocked = true;
+						break;
+					}
+				}
+				if (!blocked)
+				{
+					turnTaken = true;
+					transitioning = true;
+					transitionDirection = Direction.LEFT;
+					transitionTimeLeft = MOVING_TRANSITION_TIME;
+				}
 			}
 		}
 		if (Input.GetKey(KeyCode.D))
@@ -289,11 +399,31 @@ public class Game : MonoBehaviour
 			int newHeroX = Mathf.Min(world.tilesWide - 1, hero.x + 1);
 			if (!world.pathBlocked(newHeroX, hero.y) && newHeroX != hero.x)
 			{
-				turnTaken = true;
-				transitioning = true;
-				transitionDirection = Direction.RIGHT;
-				transitionTimeLeft = MOVING_TRANSITION_TIME;
+				blocked = false;
+				foreach (Character character in characters)
+				{
+					if (character.x == newHeroX && character.y == hero.y)
+					{
+						blocked = true;
+						break;
+					}
+				}
+				if (!blocked)
+				{
+					turnTaken = true;
+					transitioning = true;
+					transitionDirection = Direction.RIGHT;
+					transitionTimeLeft = MOVING_TRANSITION_TIME;
+				}
 			}
+		}
+		if (Input.GetKey(KeyCode.Z))
+		{
+			// Wait
+			turnTaken = true;
+			transitioning = true;
+			transitionDirection = Direction.NONE;
+			transitionTimeLeft = MOVING_TRANSITION_TIME;
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -473,6 +603,37 @@ public class Game : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	/// <summary>
+	/// Creates a text object and returns a reference to it.
+	/// </summary>
+	/// <returns>The text object reference.</returns>
+	/// <param name="name">Name of the object.</param>
+	/// <param name="text">Text to display.</param>
+	/// <param name="scale">Scale of the text.</param>
+	/// <param name="x">The x coordinate.</param>
+	/// <param name="y">The y coordinate.</param>
+	/// <param name="width">The text rectangle width.</param>
+	/// <param name="height">The text rectangle height.</param>
+	private GameObject CreateTextObject(string name, string text, float scale, float x, float y, int width = 100, int height = 100)
+	{
+		GameObject textGO = new GameObject(name);
+		textGO.transform.parent = GameObject.Find("Canvas").transform;
+		textGO.AddComponent<CanvasRenderer>();
+		Text txt = textGO.AddComponent<Text>();
+		txt.text = text;
+		txt.font = customFont;
+		txt.fontSize = 16;
+		txt.color = new Color(251f / 255f, 239f / 255f, 215f / 255f);
+		RectTransform rectTrans = txt.GetComponent<RectTransform>();
+		rectTrans.anchorMin = new Vector2(0, 0);
+		rectTrans.anchorMax = new Vector2(0, 0);
+		rectTrans.pivot = new Vector2(0, 0);
+		rectTrans.anchoredPosition = new Vector2(x, y);
+		rectTrans.sizeDelta = new Vector2(width / scale, height / scale);
+		textGO.transform.localScale = new Vector3(scale, scale, scale);
+		return textGO;
 	}
 
 	/// <summary>
