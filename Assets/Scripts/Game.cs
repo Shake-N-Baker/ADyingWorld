@@ -39,19 +39,27 @@ public class Game : MonoBehaviour
 	public Sprite uiCoin;
 	public Sprite uiSword;
 	public Sprite uiChest;
-	public GameObject hudDarkPanel;
-	public GameObject hudHeart;
-	public GameObject hudCoin;
-	public GameObject hudChest;
+	public Sprite uiInventory;
+	public GameObject hudTopLeftSmallPanel;
+	public GameObject hudSmallPanelHeart;
+	public GameObject hudSmallPanelCoin;
+	public GameObject hudHotkeyIconChest;
 	public GameObject hudHotkeySlotOnePanel;
 	public GameObject hudHotkeySlotTwoPanel;
 	public GameObject hudHotkeySlotThreePanel;
 	public GameObject hudHotkeyInventoryPanel;
+	public GameObject hudInventory;
 
 	// Font and texts
 	public Font customFont;
-	public GameObject healthText;
-	public GameObject goldText;
+	public GameObject healthSmallPanelText;
+	public GameObject goldSmallPanelText;
+	public GameObject healthInventoryText;
+	public GameObject goldInventoryText;
+	public GameObject attackInventoryText;
+	public GameObject armorInventoryText;
+	public GameObject instructionsInventoryText;
+	public GameObject descriptionInventoryText;
 	public GameObject hotkeySlotOneText;
 	public GameObject hotkeySlotTwoText;
 	public GameObject hotkeySlotThreeText;
@@ -114,6 +122,7 @@ public class Game : MonoBehaviour
 		uiCoin = Resources.Load<Sprite>("UI/uiCoins");
 		uiSword = Resources.Load<Sprite>("UI/uiSword");
 		uiChest = Resources.Load<Sprite>("UI/uiChest");
+		uiInventory = Resources.Load<Sprite>("UI/uiInventory");
 		customFont = Resources.Load<Font>("KENPIXEL");
 	}
 
@@ -195,24 +204,31 @@ public class Game : MonoBehaviour
 			}
 		}
 
-		hudHeart = new GameObject("hudHeart");
-		hudHeart.transform.position = new Vector3(7, 282, 0);
-		SpriteRenderer hudSprite = hudHeart.AddComponent<SpriteRenderer>();
+		hudInventory = new GameObject("hudInventory");
+		hudInventory.transform.position = new Vector3(8, 273, 0);
+		SpriteRenderer hudSprite = hudInventory.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiInventory;
+		hudSprite.sortingLayerName = "UI";
+		hudInventory.GetComponent<SpriteRenderer>().enabled = false;
+
+		hudSmallPanelHeart = new GameObject("hudHeart");
+		hudSmallPanelHeart.transform.position = new Vector3(7, 282, 0);
+		hudSprite = hudSmallPanelHeart.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiHeart;
 		hudSprite.sortingLayerName = "UI";
-		hudCoin = new GameObject("hudCoin");
-		hudCoin.transform.position = new Vector3(55, 282, 0);
-		hudSprite = hudCoin.AddComponent<SpriteRenderer>();
+		hudSmallPanelCoin = new GameObject("hudCoin");
+		hudSmallPanelCoin.transform.position = new Vector3(55, 282, 0);
+		hudSprite = hudSmallPanelCoin.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiCoin;
 		hudSprite.sortingLayerName = "UI";
-		hudChest = new GameObject("hudChest");
-		hudChest.transform.position = new Vector3(289, 24, 0);
-		hudSprite = hudChest.AddComponent<SpriteRenderer>();
+		hudHotkeyIconChest = new GameObject("hudChest");
+		hudHotkeyIconChest.transform.position = new Vector3(289, 24, 0);
+		hudSprite = hudHotkeyIconChest.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiChest;
 		hudSprite.sortingLayerName = "UI";
-		hudDarkPanel = new GameObject("hudDarkPanel");
-		hudDarkPanel.transform.position = new Vector3(3, 286, 0);
-		hudSprite = hudDarkPanel.AddComponent<SpriteRenderer>();
+		hudTopLeftSmallPanel = new GameObject("hudDarkPanel");
+		hudTopLeftSmallPanel.transform.position = new Vector3(3, 286, 0);
+		hudSprite = hudTopLeftSmallPanel.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiDarkPanel;
 		hudSprite.sortingLayerName = "UI";
 		hudHotkeySlotOnePanel = new GameObject("hudHotkeySlotOnePanel");
@@ -236,13 +252,20 @@ public class Game : MonoBehaviour
 		hudSprite.sprite = uiHotkeyPanel;
 		hudSprite.sortingLayerName = "UI";
 
-		healthText = CreateTextObject("HealthUIText", hero.health.ToString(), 0.5f, 27, 180, 100, 100);
-		goldText = CreateTextObject("GoldUIText", "0", 0.5f, 75, 180, 100, 100);
+		healthSmallPanelText = CreateTextObject("HealthUIText", hero.health.ToString(), 0.5f, 27, 180, 100, 100);
+		goldSmallPanelText = CreateTextObject("GoldUIText", "0", 0.5f, 75, 180, 100, 100);
 		hotkeySlotOneText = CreateTextObject("HotkeyOneUIText", "1", 0.5f, 199, 0, 100, 23);
 		hotkeySlotTwoText = CreateTextObject("HotkeyTwoUIText", "2", 0.5f, 235, 0, 100, 23);
 		hotkeySlotThreeText = CreateTextObject("HotkeyThreeUIText", "3", 0.5f, 271, 0, 100, 23);
 		hotkeyInventoryText = CreateTextObject("hotkeyInventoryText", "E", 0.5f, 307, 0, 100, 23);
+		healthInventoryText = CreateTextObject("HealthInvUIText", hero.health.ToString(), 0.5f, 55, 160, 100, 100);
+		goldInventoryText = CreateTextObject("GoldInvUIText", "0", 0.5f, 135, 160, 100, 100);
+		attackInventoryText = CreateTextObject("AttackInvUIText", "1", 0.5f, 55, 140, 100, 100);
+		armorInventoryText = CreateTextObject("ArmorInvUIText", "0", 0.5f, 135, 140, 100, 100);
+		instructionsInventoryText = CreateTextObject("InstrInvUIText", "Q to cancel/close, E to confirm", 0.5f, 25, 0, 175, 50);
+		descriptionInventoryText = CreateTextObject("DescInvUIText", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse", 0.5f, 206, 38, 100, 230);
 
+		updateUICloseInventory();
 		updateCharactersVisibility();
 		updateCamera();
 	}
@@ -320,13 +343,21 @@ public class Game : MonoBehaviour
 		}
 
 		bool turnTaken = false;
-		if (Input.GetKey(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			// Cancel, Open/Close Menu
+			// Cancel, Exit Inventory etc.
+			if (hudInventory.GetComponent<SpriteRenderer>().enabled)
+			{
+				updateUICloseInventory();
+			}
 		}
-		if (Input.GetKey(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.E))
 		{
-			// Confirm
+			// Confirm, Open Inventory etc.
+			if (!hudInventory.GetComponent<SpriteRenderer>().enabled)
+			{
+				updateUIOpenInventory();
+			}
 		}
 		bool blocked;
 		if (Input.GetKey(KeyCode.W))
@@ -425,7 +456,7 @@ public class Game : MonoBehaviour
 				}
 			}
 		}
-		if (Input.GetKey(KeyCode.Z))
+		if (Input.GetKey(KeyCode.Space))
 		{
 			// Wait
 			turnTaken = true;
@@ -645,6 +676,62 @@ public class Game : MonoBehaviour
 		rectTrans.sizeDelta = new Vector2(width / scale, height / scale);
 		textGO.transform.localScale = new Vector3(scale, scale, scale);
 		return textGO;
+	}
+
+	/// <summary>
+	/// Updates the user interface for opening the inventory.
+	/// </summary>
+	private void updateUIOpenInventory()
+	{
+		hudInventory.GetComponent<SpriteRenderer>().enabled = true;
+		healthInventoryText.GetComponent<Text>().enabled = true;
+		goldInventoryText.GetComponent<Text>().enabled = true;
+		attackInventoryText.GetComponent<Text>().enabled = true;
+		armorInventoryText.GetComponent<Text>().enabled = true;
+		instructionsInventoryText.GetComponent<Text>().enabled = true;
+		descriptionInventoryText.GetComponent<Text>().enabled = true;
+		hudTopLeftSmallPanel.GetComponent<SpriteRenderer>().enabled = false;
+		hudSmallPanelHeart.GetComponent<SpriteRenderer>().enabled = false;
+		hudSmallPanelCoin.GetComponent<SpriteRenderer>().enabled = false;
+		hudHotkeySlotOnePanel.GetComponent<SpriteRenderer>().enabled = false;
+		hudHotkeySlotTwoPanel.GetComponent<SpriteRenderer>().enabled = false;
+		hudHotkeySlotThreePanel.GetComponent<SpriteRenderer>().enabled = false;
+		hudHotkeyIconChest.GetComponent<SpriteRenderer>().enabled = false;
+		hudHotkeyInventoryPanel.GetComponent<SpriteRenderer>().enabled = false;
+		healthSmallPanelText.GetComponent<Text>().enabled = false;
+		goldSmallPanelText.GetComponent<Text>().enabled = false;
+		hotkeySlotOneText.GetComponent<Text>().enabled = false;
+		hotkeySlotTwoText.GetComponent<Text>().enabled = false;
+		hotkeySlotThreeText.GetComponent<Text>().enabled = false;
+		hotkeyInventoryText.GetComponent<Text>().enabled = false;
+	}
+
+	/// <summary>
+	/// Updates the user interface for closing the inventory.
+	/// </summary>
+	private void updateUICloseInventory()
+	{
+		hudInventory.GetComponent<SpriteRenderer>().enabled = false;
+		healthInventoryText.GetComponent<Text>().enabled = false;
+		goldInventoryText.GetComponent<Text>().enabled = false;
+		attackInventoryText.GetComponent<Text>().enabled = false;
+		armorInventoryText.GetComponent<Text>().enabled = false;
+		instructionsInventoryText.GetComponent<Text>().enabled = false;
+		descriptionInventoryText.GetComponent<Text>().enabled = false;
+		hudSmallPanelHeart.GetComponent<SpriteRenderer>().enabled = true;
+		hudSmallPanelCoin.GetComponent<SpriteRenderer>().enabled = true;
+		hudTopLeftSmallPanel.GetComponent<SpriteRenderer>().enabled = true;
+		hudHotkeyIconChest.GetComponent<SpriteRenderer>().enabled = true;
+		hudHotkeySlotOnePanel.GetComponent<SpriteRenderer>().enabled = true;
+		hudHotkeySlotTwoPanel.GetComponent<SpriteRenderer>().enabled = true;
+		hudHotkeySlotThreePanel.GetComponent<SpriteRenderer>().enabled = true;
+		hudHotkeyInventoryPanel.GetComponent<SpriteRenderer>().enabled = true;
+		healthSmallPanelText.GetComponent<Text>().enabled = true;
+		goldSmallPanelText.GetComponent<Text>().enabled = true;
+		hotkeySlotOneText.GetComponent<Text>().enabled = true;
+		hotkeySlotTwoText.GetComponent<Text>().enabled = true;
+		hotkeySlotThreeText.GetComponent<Text>().enabled = true;
+		hotkeyInventoryText.GetComponent<Text>().enabled = true;
 	}
 
 	/// <summary>
