@@ -33,13 +33,19 @@ public class Game : MonoBehaviour
 	public Sprite[][] tileLayer;
 
 	// UI Sprites
-	public Sprite uiDarkPanel;
-	public Sprite uiHotkeyPanel;
+	public Sprite uiLongPanel;
+	public Sprite uiPanel;
+	public Sprite uiPanelHighlight;
 	public Sprite uiHeart;
 	public Sprite uiCoin;
 	public Sprite uiSword;
 	public Sprite uiChest;
 	public Sprite uiInventory;
+	public Sprite uiScreenBorder;
+	public GameObject hudScreenBorderLeft;
+	public GameObject hudScreenBorderRight;
+	public GameObject hudScreenBorderTop;
+	public GameObject hudScreenBorderBottom;
 	public GameObject hudTopLeftSmallPanel;
 	public GameObject hudSmallPanelHeart;
 	public GameObject hudSmallPanelCoin;
@@ -49,6 +55,7 @@ public class Game : MonoBehaviour
 	public GameObject hudHotkeySlotThreePanel;
 	public GameObject hudHotkeyInventoryPanel;
 	public GameObject hudInventory;
+	public GameObject hudInventoryHighlight;
 
 	// Font and texts
 	public Font customFont;
@@ -116,13 +123,15 @@ public class Game : MonoBehaviour
 		Character.charShield = Resources.LoadAll<Sprite>("charShield");
 		Character.charTorso = Resources.LoadAll<Sprite>("charTorso");
 		Character.charWeapon = Resources.LoadAll<Sprite>("charWeapon");
-		uiDarkPanel = Resources.Load<Sprite>("UI/uiDarkPanel");
-		uiHotkeyPanel = Resources.Load<Sprite>("UI/uiHotkeyPanel");
+		uiLongPanel = Resources.Load<Sprite>("UI/uiLongPanel");
+		uiPanel = Resources.Load<Sprite>("UI/uiPanel");
+		uiPanelHighlight = Resources.Load<Sprite>("UI/uiPanelHighlight");
 		uiHeart = Resources.Load<Sprite>("UI/uiHeart");
 		uiCoin = Resources.Load<Sprite>("UI/uiCoins");
 		uiSword = Resources.Load<Sprite>("UI/uiSword");
 		uiChest = Resources.Load<Sprite>("UI/uiChest");
 		uiInventory = Resources.Load<Sprite>("UI/uiInventory");
+		uiScreenBorder = Resources.Load<Sprite>("UI/uiScreenBorder");
 		customFont = Resources.Load<Font>("KENPIXEL");
 	}
 
@@ -204,12 +213,42 @@ public class Game : MonoBehaviour
 			}
 		}
 
+		hudScreenBorderLeft = new GameObject("hudScreenBorderLeft");
+		hudScreenBorderLeft.transform.position = new Vector3(-32, 304, 0);
+		hudScreenBorderLeft.transform.localScale = new Vector3(0.32f, 3.2f, 1f);
+		SpriteRenderer hudSprite = hudScreenBorderLeft.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiScreenBorder;
+		hudSprite.sortingLayerName = "UI";
+		hudScreenBorderRight = new GameObject("hudScreenBorderRight");
+		hudScreenBorderRight.transform.position = new Vector3(320, 304, 0);
+		hudScreenBorderRight.transform.localScale = new Vector3(0.32f, 3.2f, 1f);
+		hudSprite = hudScreenBorderRight.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiScreenBorder;
+		hudSprite.sortingLayerName = "UI";
+		hudScreenBorderTop = new GameObject("hudScreenBorderTop");
+		hudScreenBorderTop.transform.position = new Vector3(-16, 320, 0);
+		hudScreenBorderTop.transform.localScale = new Vector3(3.52f, 0.32f, 1f);
+		hudSprite = hudScreenBorderTop.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiScreenBorder;
+		hudSprite.sortingLayerName = "UI";
+		hudScreenBorderBottom = new GameObject("hudScreenBorderBottom");
+		hudScreenBorderBottom.transform.position = new Vector3(-16, 0, 0);
+		hudScreenBorderBottom.transform.localScale = new Vector3(3.52f, 0.32f, 1f);
+		hudSprite = hudScreenBorderBottom.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiScreenBorder;
+		hudSprite.sortingLayerName = "UI";
+
 		hudInventory = new GameObject("hudInventory");
 		hudInventory.transform.position = new Vector3(8, 273, 0);
-		SpriteRenderer hudSprite = hudInventory.AddComponent<SpriteRenderer>();
+		hudSprite = hudInventory.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiInventory;
 		hudSprite.sortingLayerName = "UI";
 		hudInventory.GetComponent<SpriteRenderer>().enabled = false;
+		hudInventoryHighlight = new GameObject("hudInventoryHighlight");
+		hudInventoryHighlight.transform.position = new Vector3(18, 218, 0);
+		hudSprite = hudInventoryHighlight.AddComponent<SpriteRenderer>();
+		hudSprite.sprite = uiPanelHighlight;
+		hudSprite.sortingLayerName = "UI";
 
 		hudSmallPanelHeart = new GameObject("hudHeart");
 		hudSmallPanelHeart.transform.position = new Vector3(7, 282, 0);
@@ -229,27 +268,27 @@ public class Game : MonoBehaviour
 		hudTopLeftSmallPanel = new GameObject("hudDarkPanel");
 		hudTopLeftSmallPanel.transform.position = new Vector3(3, 286, 0);
 		hudSprite = hudTopLeftSmallPanel.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiDarkPanel;
+		hudSprite.sprite = uiLongPanel;
 		hudSprite.sortingLayerName = "UI";
 		hudHotkeySlotOnePanel = new GameObject("hudHotkeySlotOnePanel");
 		hudHotkeySlotOnePanel.transform.position = new Vector3(176, 27, 0);
 		hudSprite = hudHotkeySlotOnePanel.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sprite = uiPanel;
 		hudSprite.sortingLayerName = "UI";
 		hudHotkeySlotTwoPanel = new GameObject("hudHotkeySlotTwoPanel");
 		hudHotkeySlotTwoPanel.transform.position = new Vector3(212, 27, 0);
 		hudSprite = hudHotkeySlotTwoPanel.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sprite = uiPanel;
 		hudSprite.sortingLayerName = "UI";
 		hudHotkeySlotThreePanel = new GameObject("hudHotkeySlotThreePanel");
 		hudHotkeySlotThreePanel.transform.position = new Vector3(248, 27, 0);
 		hudSprite = hudHotkeySlotThreePanel.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sprite = uiPanel;
 		hudSprite.sortingLayerName = "UI";
 		hudHotkeyInventoryPanel = new GameObject("hudHotkeyInventoryPanel");
 		hudHotkeyInventoryPanel.transform.position = new Vector3(284, 27, 0);
 		hudSprite = hudHotkeyInventoryPanel.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiHotkeyPanel;
+		hudSprite.sprite = uiPanel;
 		hudSprite.sortingLayerName = "UI";
 
 		healthSmallPanelText = CreateTextObject("HealthUIText", hero.health.ToString(), 0.5f, 27, 180, 100, 100);
@@ -683,6 +722,7 @@ public class Game : MonoBehaviour
 	/// </summary>
 	private void updateUIOpenInventory()
 	{
+		hudInventoryHighlight.GetComponent<SpriteRenderer>().enabled = true;
 		hudInventory.GetComponent<SpriteRenderer>().enabled = true;
 		healthInventoryText.GetComponent<Text>().enabled = true;
 		goldInventoryText.GetComponent<Text>().enabled = true;
@@ -711,6 +751,7 @@ public class Game : MonoBehaviour
 	/// </summary>
 	private void updateUICloseInventory()
 	{
+		hudInventoryHighlight.GetComponent<SpriteRenderer>().enabled = false;
 		hudInventory.GetComponent<SpriteRenderer>().enabled = false;
 		healthInventoryText.GetComponent<Text>().enabled = false;
 		goldInventoryText.GetComponent<Text>().enabled = false;
