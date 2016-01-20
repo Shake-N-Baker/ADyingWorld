@@ -2,6 +2,8 @@ A Dying World
 ======
 A Roguelike where you attempt to escape a dying world.
 
+**Play the latest Unity Web Player build: [here**](http://shake-n-baker.github.io/game-a-dying-world.html "A Dying World Build")
+
 #### Planned Features:
 * Randomly generated world
 * Turn based gameplay
