@@ -25,13 +25,8 @@ public class UIGraphics
 	public static Sprite uiSword;
 	public static Sprite uiChest;
 	public static Sprite uiInventory;
-	public static Sprite uiScreenBorder;
 
 	// UI GameObjects to display the sprites
-	public GameObject hudScreenBorderLeft;
-	public GameObject hudScreenBorderRight;
-	public GameObject hudScreenBorderTop;
-	public GameObject hudScreenBorderBottom;
 	public GameObject hudTopLeftSmallPanel;
 	public GameObject hudSmallPanelHeart;
 	public GameObject hudSmallPanelCoin;
@@ -64,39 +59,10 @@ public class UIGraphics
 	public UIGraphics(Game game)
 	{
 		this.game = game;
-
-		hudScreenBorderLeft = new GameObject("hudScreenBorderLeft");
-		hudScreenBorderLeft.transform.position = new Vector3(-32, 304, 0);
-		hudScreenBorderLeft.transform.localScale = new Vector3(0.32f, 3.2f, 1f);
-		SpriteRenderer hudSprite = hudScreenBorderLeft.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiScreenBorder;
-		hudSprite.sortingLayerName = "UI";
-		hudSprite.sortingOrder = 0;
-		hudScreenBorderRight = new GameObject("hudScreenBorderRight");
-		hudScreenBorderRight.transform.position = new Vector3(320, 304, 0);
-		hudScreenBorderRight.transform.localScale = new Vector3(0.32f, 3.2f, 1f);
-		hudSprite = hudScreenBorderRight.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiScreenBorder;
-		hudSprite.sortingLayerName = "UI";
-		hudSprite.sortingOrder = 0;
-		hudScreenBorderTop = new GameObject("hudScreenBorderTop");
-		hudScreenBorderTop.transform.position = new Vector3(-16, 320, 0);
-		hudScreenBorderTop.transform.localScale = new Vector3(3.52f, 0.32f, 1f);
-		hudSprite = hudScreenBorderTop.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiScreenBorder;
-		hudSprite.sortingLayerName = "UI";
-		hudSprite.sortingOrder = 0;
-		hudScreenBorderBottom = new GameObject("hudScreenBorderBottom");
-		hudScreenBorderBottom.transform.position = new Vector3(-16, 0, 0);
-		hudScreenBorderBottom.transform.localScale = new Vector3(3.52f, 0.32f, 1f);
-		hudSprite = hudScreenBorderBottom.AddComponent<SpriteRenderer>();
-		hudSprite.sprite = uiScreenBorder;
-		hudSprite.sortingLayerName = "UI";
-		hudSprite.sortingOrder = 0;
 		
 		hudInventory = new GameObject("hudInventory");
 		hudInventory.transform.position = new Vector3(8, 273, 0);
-		hudSprite = hudInventory.AddComponent<SpriteRenderer>();
+        SpriteRenderer hudSprite = hudInventory.AddComponent<SpriteRenderer>();
 		hudSprite.sprite = uiInventory;
 		hudSprite.sortingLayerName = "UI";
 		hudSprite.sortingOrder = 1;

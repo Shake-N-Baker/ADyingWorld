@@ -190,42 +190,6 @@ MonoBehaviour:
   tileWallTableDecoration: []
   tileRoof: []
   tileDecorationOverhead: []
-  uiLongPanel: {fileID: 0}
-  uiPanel: {fileID: 0}
-  uiPanelHighlight: {fileID: 0}
-  uiHeart: {fileID: 0}
-  uiCoin: {fileID: 0}
-  uiSword: {fileID: 0}
-  uiChest: {fileID: 0}
-  uiInventory: {fileID: 0}
-  uiScreenBorder: {fileID: 0}
-  hudScreenBorderLeft: {fileID: 0}
-  hudScreenBorderRight: {fileID: 0}
-  hudScreenBorderTop: {fileID: 0}
-  hudScreenBorderBottom: {fileID: 0}
-  hudTopLeftSmallPanel: {fileID: 0}
-  hudSmallPanelHeart: {fileID: 0}
-  hudSmallPanelCoin: {fileID: 0}
-  hudHotkeyIconChest: {fileID: 0}
-  hudHotkeySlotOnePanel: {fileID: 0}
-  hudHotkeySlotTwoPanel: {fileID: 0}
-  hudHotkeySlotThreePanel: {fileID: 0}
-  hudHotkeyInventoryPanel: {fileID: 0}
-  hudInventory: {fileID: 0}
-  hudInventoryHighlight: {fileID: 0}
-  customFont: {fileID: 0}
-  healthSmallPanelText: {fileID: 0}
-  goldSmallPanelText: {fileID: 0}
-  healthInventoryText: {fileID: 0}
-  goldInventoryText: {fileID: 0}
-  attackInventoryText: {fileID: 0}
-  armorInventoryText: {fileID: 0}
-  instructionsInventoryText: {fileID: 0}
-  descriptionInventoryText: {fileID: 0}
-  hotkeySlotOneText: {fileID: 0}
-  hotkeySlotTwoText: {fileID: 0}
-  hotkeySlotThreeText: {fileID: 0}
-  hotkeyInventoryText: {fileID: 0}
   board: {fileID: 0}
   layers: []
   smallWorldDrawOffsetX: 0
@@ -381,7 +345,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 2120869161
-  m_SortingOrder: 0
+  m_SortingOrder: 9999
 --- !u!224 &1793186018
 RectTransform:
   m_ObjectHideFlags: 0

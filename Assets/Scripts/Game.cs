@@ -21,6 +21,11 @@ public class Game : MonoBehaviour
 	public const int TURNS_PER_DAY = 360;
 	public const float MOVING_TRANSITION_TIME = 0.2f;
 	public const float ANIMATE_TILE_TIME = 0.25f;
+    public const float GAME_ASPECT_RATIO = 640.0f / 576.0f;
+
+    // Screen Variables
+    public int screenWidth;
+    public int screenHeight;
 
 	// Tile Sprite Sheets
 	public Sprite[] tileGround;
@@ -93,7 +98,6 @@ public class Game : MonoBehaviour
 		UIGraphics.uiSword = Resources.Load<Sprite>("UI/uiSword");
 		UIGraphics.uiChest = Resources.Load<Sprite>("UI/uiChest");
 		UIGraphics.uiInventory = Resources.Load<Sprite>("UI/uiInventory");
-		UIGraphics.uiScreenBorder = Resources.Load<Sprite>("UI/uiScreenBorder");
 		UIGraphics.customFont = Resources.Load<Font>("KENPIXEL");
 	}
 
@@ -102,6 +106,9 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
+
 		world = new World();
 		camera2D = new Camera2D(world, world.spawnX, world.spawnY);
 		smallWorldDrawOffsetX = (Camera2D.VIEW_TILES_WIDE - world.tilesWide) / 2;
@@ -186,6 +193,10 @@ public class Game : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
+        if (screenSizeChanged())
+        {
+            handleScreenSizeChange();
+        }
 		if (transitioning)
 		{
 			handleTransition();
@@ -197,6 +208,68 @@ public class Game : MonoBehaviour
 		handleTileAnimation();
 		drawWorld();
 	}
+
+    /// <summary>
+    /// Returns true if the screen size has changed.
+    /// </summary>
+    /// <returns>Whether the screen size has changed</returns>
+    private bool screenSizeChanged()
+    {
+        if (Screen.width != screenWidth)
+        {
+            return true;
+        }
+        if (Screen.height != screenHeight)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Handles adjusting the screen resolution after any changes like fullscreen.
+    /// </summary>
+    private void handleScreenSizeChange()
+    {
+        // determine the game window's current aspect ratio
+        float windowaspect = (float)Screen.width / (float)Screen.height;
+
+        // current viewport height should be scaled by this amount
+        float scaleheight = windowaspect / GAME_ASPECT_RATIO;
+
+        // obtain camera component so we can modify its viewport
+        Camera camera = Camera.main;
+
+        // if scaled height is less than current height, add letterbox
+        if (scaleheight < 1.0f)
+        {
+            Rect rect = camera.rect;
+
+            rect.width = 1.0f;
+            rect.height = scaleheight;
+            rect.x = 0;
+            rect.y = (1.0f - scaleheight) / 2.0f;
+
+            camera.rect = rect;
+        }
+        else // add pillarbox
+        {
+            float scalewidth = 1.0f / scaleheight;
+
+            Rect rect = camera.rect;
+
+            rect.width = scalewidth;
+            rect.height = 1.0f;
+            rect.x = (1.0f - scalewidth) / 2.0f;
+            rect.y = 0;
+
+            camera.rect = rect;
+        }
+
+        // Update screen variables
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
+    }
 
 	/// <summary>
 	/// Handles the tile animations.

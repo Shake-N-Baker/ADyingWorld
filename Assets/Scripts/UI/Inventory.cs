@@ -29,7 +29,8 @@ public class Inventory
 			_open = value;
 			if (!_open)
 			{
-				x = y = 0;
+				x = 0;
+				y = 1;
 				updateUICloseInventory();
 			}
 			else
@@ -54,7 +55,8 @@ public class Inventory
 		this.game = game;
 		graphics = game.graphics;
 		_open = false;
-		x = y = 0;
+		x = 0;
+		y = 1;
 		updateUICloseInventory();
 	}
 
