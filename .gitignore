@@ -15,8 +15,12 @@
 # All platforms:
 Library
 Temp
+obj/
 *.csproj
 *.pidb
 *.unityproj
 *.sln
 *.userprefs
+
+# Visual Studio cache directory
+/.vs/
